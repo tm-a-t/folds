@@ -1,0 +1,9 @@
+from folds.app.app_bot import BotInApp
+from folds.app.bot import Bot
+from folds.app.logic import Logic
+from telethon.tl.custom import Message as _Message
+from telethon.events import ChatAction as _ChatAction
+from folds.rules.parameter_types import UseReplyTo, UseChat, UseSender, UseInputChat, UseInputSender
+
+Message = _Message
+SystemMessage = _ChatAction.Event

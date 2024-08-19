@@ -1,0 +1,27 @@
+from contextlib import contextmanager
+from contextvars import ContextVar
+
+from folds.exceptions import PaperVariableException
+
+
+class ContextVarWrapper[T]:
+    def __init__(self, name: str):
+        self.context_var: ContextVar[T] = ContextVar(name)
+
+    @contextmanager
+    def using(self, value: T):
+        token = self.context_var.set(value)
+        yield
+        self.context_var.reset(token)
+
+    def __getattr__(self, item):
+        try:
+            value = self.context_var.get()
+        except LookupError:
+            raise PaperVariableException(
+                f"Variable '{self.context_var.name}' not found. It can only be used in rule functions."
+            )
+        return getattr(value, item)
+
+
+
