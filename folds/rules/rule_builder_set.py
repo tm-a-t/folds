@@ -12,13 +12,16 @@ from folds.rules.rule_consumer import RuleConsumer
 
 class BasicRuleBuilderSet(RuleConsumer, ABC):
     def __init__(self):
-        self.added_to_group = self.on(events.ChatAction(func=added_to_group))
         self.group_message = self.on(events.NewMessage(func=lambda event: event.is_group, incoming=True))
         self.private_message = self.on(events.NewMessage(func=lambda event: event.is_private, incoming=True))
         self.channel_message = self.on(events.NewMessage(func=lambda event: from_true_channel(event), incoming=True))
 
         self.group_commands = CommandRuleBuilder(self, lambda event: event.is_group)
         self.private_commands = CommandRuleBuilder(self, lambda event: event.is_private)
+
+        self.added_to_group = self.on(events.ChatAction(func=added_to_group))
+        self.removed_from_group = ...
+        self.group_became_supergroup = ...
 
 
 class RuleBuilderSet(BasicRuleBuilderSet, ABC):

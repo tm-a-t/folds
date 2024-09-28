@@ -1,10 +1,10 @@
-class PaperRuleArgumentException(Exception):
+class FoldsRuleArgumentException(Exception):
     pass
 
 
-class PaperVariableException(Exception):
+class FoldsVariableException(Exception):
     pass
 
 
-class PaperAdminException(Exception):
+class FoldsAdminException(Exception):
     pass

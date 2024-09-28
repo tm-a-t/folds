@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 from telethon.events.common import EventCommon
 
-from folds.exceptions import PaperAdminException
+from folds.exceptions import FoldsAdminException
 
 
 class Admin(ABC):
@@ -12,7 +12,7 @@ class Admin(ABC):
 
 class EmptyAdmin(Admin):
     async def is_authorized(self, event: EventCommon) -> bool:
-        raise PaperAdminException('Admin configuration is not defined for this app.')
+        raise FoldsAdminException('Admin configuration is not defined for this app.')
 
 
 class SimpleAdmin(Admin):

@@ -1,7 +1,7 @@
 from contextlib import contextmanager
 from contextvars import ContextVar
 
-from folds.exceptions import PaperVariableException
+from folds.exceptions import FoldsVariableException
 
 
 class ContextVarWrapper[T]:
@@ -18,7 +18,7 @@ class ContextVarWrapper[T]:
         try:
             value = self.context_var.get()
         except LookupError:
-            raise PaperVariableException(
+            raise FoldsVariableException(
                 f"Variable '{self.context_var.name}' not found. It can only be used in rule functions."
             )
         return getattr(value, item)

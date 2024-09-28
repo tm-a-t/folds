@@ -1,4 +1,4 @@
-from folds.app.app_bot import BotInApp
+from folds.app.bot_in_app import BotInApp
 from folds.app.bot import Bot
 from folds.app.logic import Logic
 from telethon.tl.custom import Message as _Message

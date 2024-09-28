@@ -4,7 +4,7 @@ from telethon.sessions import Session
 
 from folds.admin.admin import Admin, EmptyAdmin
 from folds.app.app import App
-from folds.app.app_bot import BotInApp
+from folds.app.bot_in_app import BotInApp
 
 
 class Bot(BotInApp):
@@ -22,7 +22,6 @@ class Bot(BotInApp):
             admin: Admin = EmptyAdmin(),
 
             # Bot args:
-            session: str | Path | Session | None = None,
             **telethon_client_kwargs,
     ):
         app = App(
@@ -34,7 +33,6 @@ class Bot(BotInApp):
         super().__init__(
             token=token,
             app=app,
-            session=session,
             **telethon_client_kwargs,
         )
         app.bots.append(self)

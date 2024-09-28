@@ -6,7 +6,7 @@ from telethon.events.common import EventBuilder as EventBuilder, EventCommon
 
 from folds.rules.parameter_types import parameter_types, RuleCallback
 from folds.utils import await_if_needed
-from folds.exceptions import PaperRuleArgumentException
+from folds.exceptions import FoldsRuleArgumentException
 
 PreparedRuleCallback = Callable[[EventCommon], Awaitable[None]]
 
@@ -50,7 +50,7 @@ class Rule:
                     parameter_type.validate(parameter, event)
                     break
             else:
-                raise PaperRuleArgumentException(f"Argument '{name}' doesn't match any of Paper parameters.")
+                raise FoldsRuleArgumentException(f"Argument '{name}' doesn't match any of Folds parameters.")
 
     def with_extra_condition(self, filter_function: Callable[[EventCommon], Any]) -> 'Rule':
         async def new_callback(update: EventCommon):

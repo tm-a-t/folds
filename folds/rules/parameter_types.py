@@ -9,7 +9,7 @@ from telethon.tl.custom import Message
 from telethon.tl.custom.chatgetter import ChatGetter
 from telethon.tl.types.messages import MessagesNotModified
 
-from folds.exceptions import PaperRuleArgumentException
+from folds.exceptions import FoldsRuleArgumentException
 
 UseReplyTo = Annotated[Message | None, 'message to which the user replies']
 UseChat = tl_types.Chat | tl_types.Channel | tl_types.User
@@ -41,7 +41,7 @@ class EventParameterType(ParameterType):
         if (isinstance(event, events.NewMessage | events.ChatAction)
                 and parameter.annotation is not event.Event
                 and parameter.annotation is not Message):
-            raise PaperRuleArgumentException(f'Invalid argument type for {event}. Try using `paper.Message`.')
+            raise FoldsRuleArgumentException(f'Invalid argument type for {event}. Try using `folds.Message`.')
 
 
 class TextParameterType(ParameterType):
@@ -53,7 +53,7 @@ class TextParameterType(ParameterType):
 
     def validate(self, parameter: inspect.Parameter, event: EventBuilder):
         if not isinstance(event, events.NewMessage):
-            raise PaperRuleArgumentException('Text argument can be used only with new message events.')
+            raise FoldsRuleArgumentException('Text argument can be used only with new message events.')
 
 
 class ChatParameterType(ParameterType, ABC):
@@ -70,7 +70,7 @@ class ReplyToParameterType(ParameterType):
 
     def validate(self, parameter: inspect.Parameter, event: EventBuilder):
         if not isinstance(event, events.NewMessage):
-            raise PaperRuleArgumentException('ReplyTo argument can be used only with new message events.')
+            raise FoldsRuleArgumentException('ReplyTo argument can be used only with new message events.')
 
 
 class SimpleMethodParameterType(ParameterType):

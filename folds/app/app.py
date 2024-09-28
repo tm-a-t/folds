@@ -11,7 +11,7 @@ from folds.admin.admin import Admin, EmptyAdmin
 logger = logging.getLogger(__name__)
 
 
-class App:
+class App[T]:
     def __init__(
             self,
             api_id: int,
@@ -47,7 +47,18 @@ class App:
         coroutines = [bot.authorize() for bot in self.bots]
         await asyncio.gather(*coroutines)
 
-        logger.info('Paper app started')
+        logger.info('Folds app started')
 
         coroutines = [bot.run_in_app() for bot in self.bots]
         await asyncio.gather(*coroutines)
+
+    async def _run_test(self, coro):
+        coroutines = [bot.authorize() for bot in self.bots]
+        await asyncio.gather(*coroutines)
+
+        await coro
+        logger.info('Folds app started')
+
+        coroutines = [bot.run_in_app() for bot in self.bots]
+        await asyncio.gather(*coroutines)
+
