@@ -5,6 +5,10 @@ from folds.exceptions import FoldsVariableException
 
 
 class ContextVarWrapper[T]:
+    """
+    Sets the values of context variables in rules.
+    """
+
     def __init__(self, name: str):
         self.context_var: ContextVar[T] = ContextVar(name)
 
@@ -22,6 +26,3 @@ class ContextVarWrapper[T]:
                 f"Variable '{self.context_var.name}' not found. It can only be used in rule functions."
             )
         return getattr(value, item)
-
-
-

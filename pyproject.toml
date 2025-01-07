@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "folds"
+version = "0.1.0"
+description = "Elegant and scalable framework for Telegram bots, based on Telethon"
+authors = ["Artem Ivanov <tmat.ivanov@gmail.com>"]
+license = "MIT"
+readme = "readme.md"
+homepage = "https://papercraft.tmat.me/folds"
+repository = "https://github.com/tm-a-t/folds"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+Telethon = "^1.36.0"
+watchfiles = "^0.24.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

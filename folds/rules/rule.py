@@ -13,12 +13,16 @@ PreparedRuleCallback = Callable[[EventCommon], Awaitable[None]]
 
 @dataclass(frozen=True)
 class Rule:
+    """
+    An event handler.
+    """
+
     event: EventBuilder
     callback: PreparedRuleCallback
 
     @classmethod
     def from_function(cls, event: EventBuilder, callback_function: RuleCallback):
-        filter_function = event.func
+        filter_function = event.func or (lambda x: True)
 
         signature = inspect.signature(callback_function)
         cls._validate_signature(signature, event)

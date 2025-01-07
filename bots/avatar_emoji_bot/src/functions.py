@@ -3,24 +3,18 @@ from io import BytesIO
 from random import randint
 
 from PIL import Image
-from telethon.errors import PackShortNameOccupiedError, BadRequestError, StickersetInvalidError
+from telethon.errors import BadRequestError, StickersetInvalidError
 from telethon.functions import stickers, messages
 from telethon.tl import types as tl_types
 from telethon.tl.functions.messages import UploadMediaRequest
 from telethon.types import Chat, Channel
 from telethon.utils import get_input_document
-from ....folds.context import client
 
-from src.utils import get_set_title, get_set_link
+from src.utils import get_set_title, get_set_link, Emoji
+from folds.context import client
 
 mask_image = Image.open('mask.png').convert('L')
 fallback_emoji = '🟣'
-
-
-class Emoji(tl_types.InputStickerSetItem):
-    def __init__(self, document: tl_types.TypeInputDocument, emoji: str, bytes_: bytes, keywords: str | None = None):
-        self.bytes = bytes_
-        super().__init__(document, emoji, keywords=keywords)
 
 
 async def update_or_create_set(chat: Chat | Channel, user_id: int) -> bool:

@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "avatar-emoji-bot"
+name = "flexdo"
 version = "0.1.0"
 description = ""
 authors = ["Artem Ivanov <art.ivanov@jetbrains.com>"]
@@ -7,10 +7,8 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.12"
-telethon = "^1.37.0"
-pillow = "^10.4.0"
-python-dotenv = "^1.0.1"
 folds = {path = "../..", develop = true}
+python-dotenv = "^1.0.1"
 
 
 [build-system]

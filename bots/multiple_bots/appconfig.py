@@ -4,7 +4,7 @@ from folds import BotInApp
 
 
 @dataclass
-class AppConfig:
+class AppBots:
     first: BotInApp
     second: BotInApp
     third: BotInApp

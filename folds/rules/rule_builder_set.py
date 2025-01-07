@@ -11,17 +11,24 @@ from folds.rules.rule_consumer import RuleConsumer
 
 
 class BasicRuleBuilderSet(RuleConsumer, ABC):
+    """
+    An abstract class for objects that can create simple rule kinds (like ``@bot.group_message``.)
+    """
+
     def __init__(self):
+        # Here, we essentially create shortcuts: this allows, for example,
+        # using `bot.group_message` instead of `client.on(events.NewMessage(...))`
+
         self.group_message = self.on(events.NewMessage(func=lambda event: event.is_group, incoming=True))
         self.private_message = self.on(events.NewMessage(func=lambda event: event.is_private, incoming=True))
-        self.channel_message = self.on(events.NewMessage(func=lambda event: from_true_channel(event), incoming=True))
+        self.channel_message = self.on(events.NewMessage(func=lambda event: _from_true_channel(event), incoming=True))
 
         self.group_commands = CommandRuleBuilder(self, lambda event: event.is_group)
         self.private_commands = CommandRuleBuilder(self, lambda event: event.is_private)
 
-        self.added_to_group = self.on(events.ChatAction(func=added_to_group))
-        self.removed_from_group = ...
-        self.group_became_supergroup = ...
+        self.added_to_group = self.on(events.ChatAction(func=_added_to_group))
+        self.removed_from_group = ...  # todo
+        self.group_became_supergroup = ...  # todo
 
 
 class RuleBuilderSet(BasicRuleBuilderSet, ABC):
@@ -47,12 +54,12 @@ class CommandRuleBuilder:
 
     def __getattr__(self, command: str):
         def filter_events(event: Message):
-            return is_command(event.raw_text, command) and self._filter_function(event)
+            return _is_command(event.raw_text, command) and self._filter_function(event)
 
         return self._condition_set.on(events.NewMessage(func=filter_events, incoming=True))
 
 
-def is_command(text: str | None, command: str) -> bool:
+def _is_command(text: str | None, command: str) -> bool:
     if not text:
         return False
     first_word = text.split(maxsplit=1)[0].lower()
@@ -60,11 +67,11 @@ def is_command(text: str | None, command: str) -> bool:
     return '/' + command == first_word.removesuffix(bot_username)
 
 
-def from_true_channel(event: EventCommon) -> bool:
+def _from_true_channel(event: EventCommon) -> bool:
     return event.is_channel and not event.is_group
 
 
-def added_to_group(event: events.ChatAction.Event) -> bool:
+def _added_to_group(event: events.ChatAction.Event) -> bool:
     return (
             event.is_group
             and event.user_added

@@ -16,7 +16,9 @@ if TYPE_CHECKING:
 
 
 class BotInApp(RuleBuilderSet):
-    """A bot as a part of App"""
+    """
+    Represents a bot as a part of an App. Provides methods for declaring bot rules.
+    """
 
     def __init__(
             self,

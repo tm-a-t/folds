@@ -3,6 +3,10 @@ from folds.rules.rule import Rule
 
 
 class Logic(RuleBuilderSet):
+    """
+    A set of rules that can be attached to a bot.
+    """
+
     def __init__(self):
         super().__init__()
         self._rules: list[Rule] = []

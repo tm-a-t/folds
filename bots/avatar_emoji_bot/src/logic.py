@@ -1,13 +1,12 @@
 import asyncio
-from ....folds.context import client
 
+from folds import Logic
+from folds.context import client
 from telethon import events, Button
 from telethon.tl.custom import Message
 
 from src.functions import update_or_create_set
 from src.utils import get_chat_set_link
-
-from ....folds import Logic
 
 logic = Logic()
 lock = asyncio.Lock()
@@ -19,7 +18,7 @@ async def _(event: events.ChatAction.Event):
 
     user_id = event.original_update.new_participant.inviter_id
     async with lock:
-        is_created = await update_or_create_set(client, event.chat, user_id)
+        is_created = await update_or_create_set(event.chat, user_id)
 
     if is_created:
         await event.respond(f'Created!\n{get_chat_set_link(event)}', parse_mode='html')
@@ -32,7 +31,7 @@ async def _(message: Message):
     info_message = await message.respond('Updating the emoji pack...')
 
     async with lock:
-        await update_or_create_set(client, message.chat, message.sender_id)
+        await update_or_create_set(message.chat, message.sender_id)
 
     await info_message.reply(f'Emoji pack updated!\n{get_chat_set_link(message)}', parse_mode='html')
 

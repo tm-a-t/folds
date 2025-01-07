@@ -8,6 +8,11 @@ from folds.rules.rule import Rule
 
 
 class RuleConsumer(ABC):
+    """
+    An object with an ``.on`` method.
+    This method decorates a function to create a rule and then utilize it in some way.
+    """
+
     @abstractmethod
     def _use_rule(self, rule: Rule): ...
 

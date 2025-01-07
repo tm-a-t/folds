@@ -1,1 +1,1 @@
-`bots/` directory contains real bots that I built with Folds to serve as a reference.
+I put some real Folds projects in this directory so they can serve as a reference.

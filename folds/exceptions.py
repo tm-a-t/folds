@@ -1,3 +1,7 @@
+class FoldsSetupException(Exception):
+    pass
+
+
 class FoldsRuleArgumentException(Exception):
     pass
 

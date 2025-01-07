@@ -7,22 +7,24 @@ from telethon.sessions import Session
 
 from folds import BotInApp
 from folds.admin.admin import Admin, EmptyAdmin
+from folds.context import bot
+from folds.utils import require_env
 
 logger = logging.getLogger(__name__)
 
 
-class App[T]:
+class App:
     def __init__(
             self,
-            api_id: int,
-            api_hash: str,
+            api_id: int | None,
+            api_hash: str | None,
             *,
             default_session_directory: str | Path = 'data',
             admin: Admin = EmptyAdmin(),
             **common_bot_kwargs,
     ):
-        self.api_id = api_id
-        self.api_hash = api_hash
+        self.api_id = api_id or require_env('FOLDS_API_ID')
+        self.api_hash = api_hash or require_env('FOLDS_API_HASH')
         self.default_session_directory = Path(default_session_directory)
         self.admin = admin
         self.common_bot_kwargs = common_bot_kwargs
@@ -43,6 +45,7 @@ class App[T]:
     def run(self):
         get_running_loop().run_until_complete(self._run())
 
+
     async def _run(self):
         coroutines = [bot.authorize() for bot in self.bots]
         await asyncio.gather(*coroutines)
@@ -62,3 +65,14 @@ class App[T]:
         coroutines = [bot.run_in_app() for bot in self.bots]
         await asyncio.gather(*coroutines)
 
+
+# todo
+class BotGroup:
+    def __init__(self, bots: list[BotInApp]):
+        self.bots = bots
+
+    def __iter__(self):
+        return self.bots.__iter__()
+
+    def get(self) -> 'derived group':
+        return bot.app.bots

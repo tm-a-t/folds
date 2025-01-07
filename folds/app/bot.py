@@ -1,20 +1,23 @@
 from pathlib import Path
 
-from telethon.sessions import Session
-
 from folds.admin.admin import Admin, EmptyAdmin
 from folds.app.app import App
 from folds.app.bot_in_app import BotInApp
+from folds.utils import require_env
 
 
 class Bot(BotInApp):
-    """A single-bot app."""
+    """
+    A single-bot app.
+
+    This derives from ``BotInApp`` to provide the methods for declaring bot's rules.
+    """
 
     def __init__(
             self,
-            token: str,
-            api_id: int,
-            api_hash: str,
+            token: str | None = None,
+            api_id: int | None = None,
+            api_hash: str | None = None,
             *,
 
             # App args:
@@ -31,7 +34,7 @@ class Bot(BotInApp):
             admin=admin,
         )
         super().__init__(
-            token=token,
+            token=token or require_env('FOLDS_BOT_TOKEN'),
             app=app,
             **telethon_client_kwargs,
         )

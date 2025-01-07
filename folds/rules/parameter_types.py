@@ -20,6 +20,10 @@ UseInputSender = tl_types.InputPeerUser | tl_types.InputChannel
 RuleCallback = Callable[..., Awaitable[str | None]]
 
 class ParameterType(ABC):
+    """
+    Computes the value of a rule argument based on its type hint.
+    """
+
     @abstractmethod
     def matches(self, parameter: inspect.Parameter) -> bool: ...
 
