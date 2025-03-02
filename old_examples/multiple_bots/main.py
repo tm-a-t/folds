@@ -1,6 +1,6 @@
 from bots.multiple_bots.appconfig import AppBots
 from folds import BotInApp
-from folds.app.app import App
+from src.folds.app import App
 
 # bots = AppBots(
 #     first=None,

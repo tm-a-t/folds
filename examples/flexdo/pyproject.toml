@@ -1,0 +1,13 @@
+[project]
+name = "flexdo"
+version = "0.1.0"
+description = "Add your description here"
+readme = "readme.md"
+requires-python = ">=3.12"
+dependencies = [
+    "dotenv>=0.9.9",
+    "folds",
+]
+
+[tool.uv.sources]
+folds = { workspace = true }

@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/bots/avatar_emoji_bot/avatar_emoji_bot.iml" filepath="$PROJECT_DIR$/bots/avatar_emoji_bot/avatar_emoji_bot.iml" />
-      <module fileurl="file://$PROJECT_DIR$/bots/flexdo/flexdo.iml" filepath="$PROJECT_DIR$/bots/flexdo/flexdo.iml" />
       <module fileurl="file://$PROJECT_DIR$/folds.iml" filepath="$PROJECT_DIR$/folds.iml" />
     </modules>
   </component>

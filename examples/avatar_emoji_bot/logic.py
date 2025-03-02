@@ -5,8 +5,8 @@ from folds.context import client
 from telethon import events, Button
 from telethon.tl.custom import Message
 
-from src.functions import update_or_create_set
-from src.utils import get_chat_set_link
+from examples.avatar_emoji_bot.functions import update_or_create_set
+from examples.avatar_emoji_bot.utils import get_chat_set_link
 
 logic = Logic()
 lock = asyncio.Lock()
