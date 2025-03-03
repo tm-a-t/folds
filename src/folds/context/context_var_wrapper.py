@@ -18,11 +18,16 @@ class ContextVarWrapper[T]:
         yield
         self.context_var.reset(token)
 
-    def __getattr__(self, item):
+    def _try_getting_value(self) -> T:
         try:
-            value = self.context_var.get()
+            return self.context_var.get()
         except LookupError:
             raise FoldsVariableException(
                 f"Variable '{self.context_var.name}' not found. It can only be used in rule functions."
             )
-        return getattr(value, item)
+
+    def __getattr__(self, item):
+        return getattr(self._try_getting_value(), item)
+
+    def __call__(self, *args, **kwargs):
+        return self._try_getting_value()(*args, **kwargs)

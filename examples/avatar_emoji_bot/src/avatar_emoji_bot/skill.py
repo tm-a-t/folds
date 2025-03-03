@@ -4,8 +4,8 @@ from folds import Skill
 from telethon import events, Button
 from telethon.tl.custom import Message
 
-from examples.avatar_emoji_bot.src.avatar_emoji_bot.functions import update_or_create_set
-from examples.avatar_emoji_bot.src.avatar_emoji_bot.utils import get_chat_set_link
+from avatar_emoji_bot.functions import update_or_create_set
+from avatar_emoji_bot.utils import get_chat_set_link
 
 skill = Skill()
 lock = asyncio.Lock()
