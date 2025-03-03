@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from folds.admin.admin import Admin, EmptyAdmin
+from folds.app import DEFAULT_DATA_DIRECTORY
 from folds.app.app import App
 from folds.app.bot_in_app import BotInApp
 from folds.utils import require_env
@@ -21,7 +22,7 @@ class Bot(BotInApp):
             *,
 
             # App args:
-            default_session_directory: str | Path = 'data',
+            default_session_directory: str | Path = DEFAULT_DATA_DIRECTORY,
             admin: Admin = EmptyAdmin(),
 
             # Bot args:

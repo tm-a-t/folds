@@ -5,8 +5,9 @@ from pathlib import Path
 from telethon.helpers import get_running_loop
 from telethon.sessions import Session
 
-from folds import BotInApp
 from folds.admin.admin import Admin, EmptyAdmin
+from folds.app import DEFAULT_DATA_DIRECTORY
+from folds.app.bot_in_app import BotInApp
 from folds.context import bot
 from folds.utils import require_env
 
@@ -19,7 +20,7 @@ class App:
             api_id: int | None,
             api_hash: str | None,
             *,
-            default_session_directory: str | Path = 'data',
+            default_session_directory: str | Path = DEFAULT_DATA_DIRECTORY,
             admin: Admin = EmptyAdmin(),
             **common_bot_kwargs,
     ):
