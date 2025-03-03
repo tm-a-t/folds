@@ -4,6 +4,7 @@ from typing import Callable, Any
 from telethon import events
 from telethon.events.common import EventCommon
 from telethon.tl.custom import Message
+import telethon.tl.types as tl_types
 
 from folds.context import bot, client
 from folds.rules.rule import Rule
@@ -27,8 +28,10 @@ class BasicRuleBuilderSet(RuleConsumer, ABC):
         self.private_commands = CommandRuleBuilder(self, lambda event: event.is_private)
 
         self.added_to_group = self.on(events.ChatAction(func=_added_to_group))
-        self.removed_from_group = ...  # todo
-        self.group_became_supergroup = ...  # todo
+        self.removed_from_group = self.on(events.ChatAction(func=_removed_from_group))
+        self.group_became_supergroup =  self.on(events.ChatAction(func=_group_became_supergroup))
+
+        self.inline_query = self.on(events.InlineQuery())
 
 
 class RuleBuilderSet(BasicRuleBuilderSet, ABC):
@@ -78,3 +81,22 @@ def _added_to_group(event: events.ChatAction.Event) -> bool:
             and event.user.is_self
             and hasattr(event.original_update, 'new_participant')
     )
+
+
+def _removed_from_group(event: events.ChatAction.Event) -> bool:
+    return (
+            event.is_group
+            and event.user_kicked
+            and event.user.is_self
+    )
+
+
+def _group_became_supergroup(event: events.ChatAction.Event) -> bool:
+    return (
+            isinstance(event, tl_types.UpdateNewChannelMessage)
+            and isinstance(event.message, tl_types.MessageService)
+            and isinstance(
+                event.message.action, tl_types.MessageActionChannelMigrateFrom
+            )
+    )
+
