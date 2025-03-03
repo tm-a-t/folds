@@ -8,7 +8,6 @@ from telethon.sessions import Session
 from folds.admin.admin import Admin, EmptyAdmin
 from folds.app import DEFAULT_DATA_DIRECTORY
 from folds.app.bot_in_app import BotInApp
-from folds.context import bot
 from folds.utils import require_env
 
 logger = logging.getLogger(__name__)
@@ -32,7 +31,7 @@ class App:
 
         self.bots: list[BotInApp] = []
 
-    def bot(self, token: str, *, session: str | Path | Session | None = None, **kwargs):
+    def create_bot(self, token: str, *, session: str | Path | Session | None = None, **kwargs) -> BotInApp:
         bot = BotInApp(
             token,
             app=self,
@@ -65,15 +64,3 @@ class App:
 
         coroutines = [bot.run_in_app() for bot in self.bots]
         await asyncio.gather(*coroutines)
-
-
-# todo
-class BotGroup:
-    def __init__(self, bots: list[BotInApp]):
-        self.bots = bots
-
-    def __iter__(self):
-        return self.bots.__iter__()
-
-    def get(self) -> 'derived group':
-        return bot.app.bots

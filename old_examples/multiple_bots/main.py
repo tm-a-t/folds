@@ -1,18 +1,7 @@
-from bots.multiple_bots.appconfig import AppBots
-from folds import BotInApp
-from src.folds.app import App
+from app import app, bot1, bot2
+from common_logic import common_logic
 
-# bots = AppBots(
-#     first=None,
-#     second=22,
-# )
+bot1.use_logic(common_logic)
+bot2.use_logic(common_logic)
 
-app = App(
-    111,
-    "111",
-    bots=bots,
-)
-
-app.bots = AppBots(
-    first=app.bot('aaa')
-)
+app.run()
