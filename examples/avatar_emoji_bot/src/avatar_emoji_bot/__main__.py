@@ -3,7 +3,7 @@ import os
 
 from dotenv import load_dotenv
 
-from examples.avatar_emoji_bot.logic import logic
+from examples.avatar_emoji_bot.src.avatar_emoji_bot.logic import logic
 from folds import Bot
 
 logging.basicConfig(

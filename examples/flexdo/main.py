@@ -18,11 +18,11 @@ bot_token, api_id, api_hash = os.environ['BOT_TOKEN'], int(os.environ['API_ID'])
 bot = Bot(bot_token, api_id, api_hash, parse_mode='html')
 
 @bot.private_message
-async def _():
+async def f():
     return 'Please add me to a channel first!'
 
 @bot.channel_message
-async def _(message: Message):
+async def f(message: Message):
     try:
         await client.edit_message(message.chat, message.id, buttons=Button.inline('✔️ Mark as done', 'complete'))
     except (ChatAdminRequiredError, MessageIdInvalidError, InlineBotRequiredError):
@@ -30,7 +30,7 @@ async def _(message: Message):
         pass
 
 @bot.on(events.CallbackQuery())
-async def _(event: events.CallbackQuery.Event):
+async def f(event: events.CallbackQuery.Event):
     message = await event.get_message()
     source: str | None = message.text
     if event.data == b'complete':

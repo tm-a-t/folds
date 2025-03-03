@@ -10,10 +10,10 @@ from telethon.tl.functions.messages import UploadMediaRequest
 from telethon.types import Chat, Channel
 from telethon.utils import get_input_document
 
-from examples.avatar_emoji_bot.utils import get_set_title, get_set_link, Emoji
+from examples.avatar_emoji_bot.src.avatar_emoji_bot.utils import get_set_title, get_set_link, Emoji
 from folds.context import client
 
-mask_image = Image.open('mask.png').convert('L')
+mask_image = Image.open('../../mask.png').convert('L')
 fallback_emoji = '🟣'
 
 

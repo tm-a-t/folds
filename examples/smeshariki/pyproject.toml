@@ -1,5 +1,5 @@
 [project]
-name = "avatar-emoji-bot"
+name = "smeshariki"
 version = "0.1.0"
 description = "Add your description here"
 readme = "readme.md"
@@ -7,12 +7,10 @@ authors = [
     { name = "Artem Ivanov", email = "art.ivanov@jetbrains.com" }
 ]
 requires-python = ">=3.12"
-dependencies = [
-    "pillow>=11.1.0",
-]
+dependencies = []
 
 [project.scripts]
-avatar-emoji-bot = "avatar_emoji_bot:main"
+smeshariki = "smeshariki:main"
 
 [build-system]
 requires = ["hatchling"]
