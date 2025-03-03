@@ -7,6 +7,7 @@ members = [
     "avatar-emoji-bot",
     "flexdo",
     "folds",
+    "smeshariki",
 ]
 
 [[package]]
@@ -157,6 +158,11 @@ sdist = { url = "https://files.pythonhosted.org/packages/aa/65/7d973b89c4d2351d7
 wheels = [
     { url = "https://files.pythonhosted.org/packages/49/97/fa78e3d2f65c02c8e1268b9aba606569fe97f6c8f7c2d74394553347c145/rsa-4.9-py3-none-any.whl", hash = "sha256:90260d9058e514786967344d0ef75fa8727eed8a7d2e43ce9f4bcf1b536174f7", size = 34315 },
 ]
+
+[[package]]
+name = "smeshariki"
+version = "0.1.0"
+source = { editable = "examples/smeshariki" }
 
 [[package]]
 name = "sniffio"

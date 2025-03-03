@@ -4,7 +4,7 @@ from folds.app.bot import Bot
 from folds.app.skill import Skill
 from telethon.tl.custom import Message as _Message
 from telethon.events import ChatAction as _ChatAction
-from folds.rules.parameter_types import UseReplyTo, UseChat, UseSender, UseInputChat, UseInputSender
+from folds.rules.parameter_types import ThisReplyTo, ThisChat, ThisSender, ThisInputChat, ThisInputSender
 
 Message = _Message
 SystemMessage = _ChatAction.Event

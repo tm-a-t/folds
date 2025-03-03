@@ -7,15 +7,14 @@ from telethon import events
 from telethon.events.common import EventBuilder as EventBuilder, EventCommon
 from telethon.tl.custom import Message
 from telethon.tl.custom.chatgetter import ChatGetter
-from telethon.tl.types.messages import MessagesNotModified
 
 from folds.exceptions import FoldsRuleArgumentException
 
-UseReplyTo = Annotated[Message | None, 'message to which the user replies']
-UseChat = tl_types.Chat | tl_types.Channel | tl_types.User
-UseSender = tl_types.User | tl_types.Channel
-UseInputChat = tl_types.InputPeerChat | tl_types.InputPeerChannel | tl_types.InputPeerUser
-UseInputSender = tl_types.InputPeerUser | tl_types.InputChannel
+ThisReplyTo = Annotated[Message | None, 'message to which the user replies']
+ThisChat = tl_types.Chat | tl_types.Channel | tl_types.User
+ThisSender = tl_types.User | tl_types.Channel
+ThisInputChat = tl_types.InputPeerChat | tl_types.InputPeerChannel | tl_types.InputPeerUser
+ThisInputSender = tl_types.InputPeerUser | tl_types.InputChannel
 
 RuleCallback = Callable[..., Awaitable[str | None]]
 
@@ -67,7 +66,7 @@ class ChatParameterType(ParameterType, ABC):
 
 class ReplyToParameterType(ParameterType):
     def matches(self, parameter: inspect.Parameter) -> bool:
-        return parameter.annotation is UseReplyTo
+        return parameter.annotation is ThisReplyTo
 
     async def get_value(self, event: Message):
         return await event.get_reply_message()
@@ -93,12 +92,12 @@ class SimpleMethodParameterType(ParameterType):
         pass
 
 
-parameter_types = (
+parameter_types: tuple[ParameterType, ...] = (
     TextParameterType(),
     ReplyToParameterType(),
-    SimpleMethodParameterType('get_chat', UseChat),
-    SimpleMethodParameterType('get_sender', UseSender),
-    SimpleMethodParameterType('get_input_chat', UseInputChat),
-    SimpleMethodParameterType('get_input_sender', UseInputSender),
+    SimpleMethodParameterType('get_chat', ThisChat),
+    SimpleMethodParameterType('get_sender', ThisSender),
+    SimpleMethodParameterType('get_input_chat', ThisInputChat),
+    SimpleMethodParameterType('get_input_sender', ThisInputSender),
     EventParameterType(),
 )
