@@ -1,7 +1,7 @@
 from app import app, bot1, bot2
-from common_logic import common_logic
+from common_skill import common_skill
 
-bot1.use_logic(common_logic)
-bot2.use_logic(common_logic)
+bot1.use(common_skill)
+bot2.use(common_skill)
 
 app.run()

@@ -6,7 +6,7 @@ from telethon.sessions import Session
 from folds.app.bot_client import BotClient
 from folds.context import bot, client
 from folds.rules.rule_builder_set import RuleBuilderSet
-from folds.app.logic import Logic
+from folds.app.skill import Skill
 from folds.rules.rule import Rule, PreparedRuleCallback
 
 from typing import TYPE_CHECKING, Any
@@ -41,9 +41,9 @@ class BotInApp(RuleBuilderSet):
         filename = 'bot' + self.bot_token.split(':')[0]
         return self.app.default_session_directory / filename
 
-    def use_logic(self, *logic_list: Logic):
-        for logic in logic_list:
-            for rule in logic.rules:
+    def use(self, *skill_list: Skill):
+        for skill in skill_list:
+            for rule in skill.rules:
                 self._use_rule(rule)
 
     def _use_rule(self, rule: Rule):

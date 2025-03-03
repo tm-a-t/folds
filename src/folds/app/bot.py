@@ -1,4 +1,5 @@
 from pathlib import Path
+from typing import Any
 
 from folds.admin.admin import Admin, EmptyAdmin
 from folds.app import DEFAULT_DATA_DIRECTORY
@@ -26,6 +27,7 @@ class Bot(BotInApp):
             admin: Admin = EmptyAdmin(),
 
             # Bot args:
+            parse_mode: Any = None,
             **telethon_client_kwargs,
     ):
         app = App(
@@ -37,6 +39,7 @@ class Bot(BotInApp):
         super().__init__(
             token=token or require_env('FOLDS_BOT_TOKEN'),
             app=app,
+            parse_mode=parse_mode,
             **telethon_client_kwargs,
         )
         app.bots.append(self)

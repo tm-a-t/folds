@@ -3,7 +3,7 @@ import os
 
 from dotenv import load_dotenv
 
-from examples.avatar_emoji_bot.src.avatar_emoji_bot.logic import logic
+from avatar_emoji_bot.skill import skill
 from folds import Bot
 
 logging.basicConfig(
@@ -15,6 +15,6 @@ logging.basicConfig(
 load_dotenv()
 bot_token, api_id, api_hash = os.environ['BOT_TOKEN'], int(os.environ['API_ID']), os.environ['API_HASH']
 bot = Bot(bot_token, api_id, api_hash, parse_mode='html')
-bot.use_logic(logic)
+bot.use(skill)
 
 bot.run()

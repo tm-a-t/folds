@@ -1,17 +1,17 @@
 import asyncio
 
-from folds import Logic
+from folds import Skill
 from telethon import events, Button
 from telethon.tl.custom import Message
 
 from examples.avatar_emoji_bot.src.avatar_emoji_bot.functions import update_or_create_set
 from examples.avatar_emoji_bot.src.avatar_emoji_bot.utils import get_chat_set_link
 
-logic = Logic()
+skill = Skill()
 lock = asyncio.Lock()
 
 
-@logic.added_to_group
+@skill.added_to_group
 async def f(event: events.ChatAction.Event):
     await event.respond('Creating an emoji pack...')
 
@@ -25,7 +25,7 @@ async def f(event: events.ChatAction.Event):
         await event.respond(f'Pack updated!\n{get_chat_set_link(event)}', parse_mode='html')
 
 
-@logic.group_commands.update
+@skill.group_commands.update
 async def f(message: Message):
     info_message = await message.respond('Updating the emoji pack...')
 
@@ -35,7 +35,7 @@ async def f(message: Message):
     await info_message.reply(f'Emoji pack updated!\n{get_chat_set_link(message)}', parse_mode='html')
 
 
-@logic.private_message
+@skill.private_message
 async def f(message: Message):
     button = Button.url('Choose group', f't.me/{message.client.me.username}?startgroup')
     await message.respond('Hello! Add me to group to start.', buttons=button)
