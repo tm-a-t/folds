@@ -2,7 +2,6 @@
 name = "smeshariki"
 version = "0.1.0"
 description = "Add your description here"
-readme = "readme.md"
 authors = [
     { name = "Artem Ivanov", email = "art.ivanov@jetbrains.com" }
 ]
