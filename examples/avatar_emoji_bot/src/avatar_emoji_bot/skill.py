@@ -1,8 +1,7 @@
 import asyncio
 
-from folds import Skill
-from telethon import events, Button
-from telethon.tl.custom import Message
+from folds import Skill, Message, SystemMessage
+from telethon import Button
 
 from avatar_emoji_bot.functions import update_or_create_set
 from avatar_emoji_bot.utils import get_chat_set_link
@@ -12,7 +11,7 @@ lock = asyncio.Lock()
 
 
 @skill.added_to_group
-async def f(event: events.ChatAction.Event):
+async def f(event: SystemMessage):
     await event.respond('Creating an emoji pack...')
 
     user_id = event.original_update.new_participant.inviter_id
@@ -20,9 +19,9 @@ async def f(event: events.ChatAction.Event):
         is_created = await update_or_create_set(event.chat, user_id)
 
     if is_created:
-        await event.respond(f'Created!\n{get_chat_set_link(event)}', parse_mode='html')
+        return f'Created!\n{get_chat_set_link(event)}'
     else:
-        await event.respond(f'Pack updated!\n{get_chat_set_link(event)}', parse_mode='html')
+        return f'Pack updated!\n{get_chat_set_link(event)}'
 
 
 @skill.group_commands.update
@@ -32,7 +31,7 @@ async def f(message: Message):
     async with lock:
         await update_or_create_set(message.chat, message.sender_id)
 
-    await info_message.reply(f'Emoji pack updated!\n{get_chat_set_link(message)}', parse_mode='html')
+    await info_message.reply(f'Emoji pack updated!\n{get_chat_set_link(message)}')
 
 
 @skill.private_message
