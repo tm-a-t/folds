@@ -2,17 +2,18 @@
 name = "avatar-emoji-bot"
 version = "0.1.0"
 description = "Add your description here"
-readme = "readme.md"
 authors = [
     { name = "Artem Ivanov", email = "art.ivanov@jetbrains.com" }
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "folds",
     "pillow>=11.1.0",
+    "python-dotenv>=1.0.1",
 ]
 
 [project.scripts]
-avatar-emoji-bot = "avatar_emoji_bot:main"
+avatar-emoji-bot = "avatar_emoji_bot:__main__"
 
 [build-system]
 requires = ["hatchling"]

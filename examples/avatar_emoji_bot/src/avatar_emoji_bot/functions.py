@@ -13,7 +13,7 @@ from telethon.utils import get_input_document
 from avatar_emoji_bot.utils import get_set_title, get_set_link, Emoji
 from folds.context import client
 
-mask_image = Image.open('/Users/Art.Ivanov/dev/folds/examples/avatar_emoji_bot/mask.png').convert('L')
+mask_image = Image.open('mask.png').convert('L')
 fallback_emoji = '🟣'
 
 

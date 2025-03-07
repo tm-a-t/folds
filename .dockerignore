@@ -2,3 +2,5 @@
 **/.folds/
 **/.venv/
 **/__pycache__/
+.idea/
+*.iml
