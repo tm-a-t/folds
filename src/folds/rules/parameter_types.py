@@ -10,13 +10,13 @@ from telethon.tl.custom.chatgetter import ChatGetter
 
 from folds.exceptions import FoldsRuleArgumentException
 
-ThisReplyTo = Annotated[Message | None, 'message to which the user replies']
-ThisChat = tl_types.Chat | tl_types.Channel | tl_types.User
-ThisSender = tl_types.User | tl_types.Channel
-ThisInputChat = tl_types.InputPeerChat | tl_types.InputPeerChannel | tl_types.InputPeerUser
-ThisInputSender = tl_types.InputPeerUser | tl_types.InputChannel
+type ThisReplyTo = Annotated[Message | None, 'message to which the user replies']
+type ThisChat = tl_types.Chat | tl_types.Channel | tl_types.User
+type ThisSender = tl_types.User | tl_types.Channel
+type ThisInputChat = tl_types.InputPeerChat | tl_types.InputPeerChannel | tl_types.InputPeerUser
+type ThisInputSender = tl_types.InputPeerUser | tl_types.InputChannel
 
-RuleCallback = Callable[..., Awaitable[str | None]]
+type RuleCallback = Callable[..., Awaitable[str | None]]
 
 class ParameterType(ABC):
     """

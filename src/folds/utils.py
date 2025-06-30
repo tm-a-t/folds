@@ -6,7 +6,7 @@ from typing import Any
 from folds.exceptions import FoldsSetupException
 
 
-async def await_if_needed(value: Any):
+async def await_if_needed(value: Any) -> Any:
     return await value if inspect.isawaitable(value) else value
 
 
