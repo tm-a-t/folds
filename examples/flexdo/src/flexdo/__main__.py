@@ -17,11 +17,11 @@ load_dotenv()
 bot_token, api_id, api_hash = os.environ['BOT_TOKEN'], int(os.environ['API_ID']), os.environ['API_HASH']
 bot = Bot(bot_token, api_id, api_hash, parse_mode='html')
 
-@bot.private_message
+@bot.private_message()
 async def f():
     return 'Please add me to a channel first!'
 
-@bot.channel_message
+@bot.channel_message()
 async def f(message: Message):
     try:
         await client.edit_message(message.chat_id, message.id, buttons=Button.inline('✔️ Mark as done', 'complete'))
