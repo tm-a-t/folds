@@ -8,10 +8,10 @@ import telethon.tl.types as tl_types
 
 from folds.context import bot, client
 from folds.rules.rule import Rule
-from folds.rules.rule_consumer import RuleConsumer
+from folds.rules.rule_builder_factory import RuleBuilderFactory, RuleBuilderProtocol
 
 
-class BasicRuleBuilderSet(RuleConsumer, ABC):
+class BasicRuleBuilderSet(RuleBuilderFactory, ABC):
     """
     An abstract class for objects that can create simple rule kinds (like ``@bot.group_message``.)
     """
@@ -20,25 +20,31 @@ class BasicRuleBuilderSet(RuleConsumer, ABC):
         # Here, we essentially create shortcuts: this allows, for example,
         # using `bot.group_message` instead of `client.on(events.NewMessage(...))`
 
-        self.group_message = self.on(events.NewMessage(func=lambda event: event.is_group, incoming=True))
-        self.private_message = self.on(events.NewMessage(func=lambda event: event.is_private, incoming=True))
-        self.channel_message = self.on(events.NewMessage(func=lambda event: _from_true_channel(event), incoming=True))
+        self.group_message: RuleBuilderProtocol = self.create_rule_builder(
+            events.NewMessage(func=lambda event: event.is_group, incoming=True)
+        )
+        self.private_message: RuleBuilderProtocol = self.create_rule_builder(
+            events.NewMessage(func=lambda event: event.is_private, incoming=True)
+        )
+        self.channel_message: RuleBuilderProtocol = self.create_rule_builder(
+            events.NewMessage(func=lambda event: _from_true_channel(event), incoming=True)
+        )
 
-        self.group_commands = CommandRuleBuilder(self, lambda event: event.is_group)
-        self.private_commands = CommandRuleBuilder(self, lambda event: event.is_private)
+        self.group_commands = CommandRuleBuilderSet(self, lambda event: event.is_group)
+        self.private_commands = CommandRuleBuilderSet(self, lambda event: event.is_private)
 
-        self.added_to_group = self.on(events.ChatAction(func=_added_to_group))
-        self.removed_from_group = self.on(events.ChatAction(func=_removed_from_group))
-        self.group_became_supergroup =  self.on(events.ChatAction(func=_group_became_supergroup))
+        self.added_to_group: RuleBuilderProtocol = self.create_rule_builder(events.ChatAction(func=_added_to_group))
+        self.removed_from_group: RuleBuilderProtocol = self.create_rule_builder(events.ChatAction(func=_removed_from_group))
+        self.group_became_supergroup: RuleBuilderProtocol = self.create_rule_builder(events.ChatAction(func=_group_became_supergroup))
 
-        self.inline_query = self.on(events.InlineQuery())
+        self.inline_query: RuleBuilderProtocol = self.create_rule_builder(events.InlineQuery())
 
 
 class RuleBuilderSet(BasicRuleBuilderSet, ABC):
     def __init__(self):
         super().__init__()
-        self.admin_commands = CommandRuleBuilder(self, lambda event: bot.app.admin.is_authorized(event))
-        self.admin = AdminRuleBuilderSet(self._use_rule)
+        self.admin_commands: CommandRuleBuilderSet = CommandRuleBuilderSet(self, lambda event: bot.app.admin.is_authorized(event))
+        self.admin: AdminRuleBuilderSet = AdminRuleBuilderSet(self._use_rule)
 
 
 class AdminRuleBuilderSet(BasicRuleBuilderSet):
@@ -50,7 +56,7 @@ class AdminRuleBuilderSet(BasicRuleBuilderSet):
         self.use_rule(rule.with_extra_condition(lambda event: bot.app.admin.is_authorized(event)))
 
 
-class CommandRuleBuilder:
+class CommandRuleBuilderSet:
     def __init__(self, condition_set: BasicRuleBuilderSet, filter_function: Callable[[Message], Any]):
         self._condition_set = condition_set
         self._filter_function = filter_function
@@ -59,7 +65,7 @@ class CommandRuleBuilder:
         def filter_events(event: Message):
             return _is_command(event.raw_text, command) and self._filter_function(event)
 
-        return self._condition_set.on(events.NewMessage(func=filter_events, incoming=True))
+        return self._condition_set.create_rule_builder(events.NewMessage(func=filter_events, incoming=True))
 
 
 def _is_command(text: str | None, command: str) -> bool:
