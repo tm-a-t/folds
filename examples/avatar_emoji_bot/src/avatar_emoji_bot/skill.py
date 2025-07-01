@@ -10,14 +10,6 @@ skill = Skill()
 lock = asyncio.Lock()
 
 
-@skill.group_message()
-async def f(message: Message):
-    await message.respond(
-        f'Hello, {message.sender.first_name}! '
-        'You can choose an emoji pack by clicking on the "Choose group" button.'
-    )
-
-
 @skill.added_to_group()
 async def f(event: SystemMessage):
     await event.respond('Creating an emoji pack...')
