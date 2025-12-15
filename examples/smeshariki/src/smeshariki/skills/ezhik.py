@@ -14,12 +14,12 @@ last_quote_usage: dict[tuple[int, int], datetime] = {}
 
 
 
-@ezhik_skill.added_to_group()
+@ezhik_skill.added_to_group
 async def _():
     return all_bot_strings.ezhik.greeting
 
 
-@ezhik_skill.group_message()
+@ezhik_skill.group_message
 async def _(message: Message, reply_to: ThisReplyTo):
     name: str | None = None
     if reply_to:

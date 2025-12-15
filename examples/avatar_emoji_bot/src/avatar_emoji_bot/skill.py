@@ -10,7 +10,7 @@ skill = Skill()
 lock = asyncio.Lock()
 
 
-@skill.added_to_group()
+@skill.added_to_group
 async def f(event: SystemMessage):
     await event.respond('Creating an emoji pack...')
 
@@ -24,7 +24,7 @@ async def f(event: SystemMessage):
         return f'Pack updated!\n{get_chat_set_link(event)}'
 
 
-@skill.group_commands.update()
+@skill.group_commands.update
 async def f(message: Message):
     info_message = await message.respond('Updating the emoji pack...')
 
@@ -34,7 +34,7 @@ async def f(message: Message):
     await info_message.reply(f'Emoji pack updated!\n{get_chat_set_link(message)}')
 
 
-@skill.private_message()
+@skill.private_message
 async def f(message: Message):
     button = Button.url('Choose group', f't.me/{message.client.me.username}?startgroup')
     await message.respond('Hello! Add me to group to start.', buttons=button)
