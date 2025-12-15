@@ -11,8 +11,8 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
-    "telethon~=1.39.0",
-    "watchfiles~=1.0.4",
+    "telethon~=1.42.0",
+    "watchfiles~=1.1.1",
 ]
 
 [tool.uv.sources]
