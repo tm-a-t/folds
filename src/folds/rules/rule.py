@@ -54,7 +54,7 @@ class Rule:
                     parameter_type.validate(parameter, event)
                     break
             else:
-                raise FoldsRuleArgumentException(f"Argument '{name}' doesn't match any of Folds parameters.")
+                raise FoldsRuleArgumentException(f"Cannot infer '{parameter}' for {event}.")
 
     def with_extra_condition(self, filter_function: Callable[[EventCommon], Any]) -> 'Rule':
         async def new_callback(update: EventCommon):
