@@ -1,6 +1,6 @@
 [project]
 name = "folds"
-version = "0.1.0"
+version = "0.2.0"
 description = "An elegant and scalable framework for Telegram bots, based on Telethon"
 license = "MIT"
 readme = "readme.md"
