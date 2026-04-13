@@ -1,12 +1,11 @@
 import inspect
 from abc import ABC, abstractmethod
-from typing import Annotated, Callable, Awaitable
+from typing import Annotated, Callable, Awaitable, Any
 
 import telethon.tl.types as tl_types
 from telethon import events
 from telethon.events.common import EventBuilder as EventBuilder, EventCommon
 from telethon.tl.custom import Message
-from telethon.tl.custom.chatgetter import ChatGetter
 
 from folds.exceptions import FoldsRuleArgumentException
 
@@ -27,7 +26,7 @@ class ParameterType(ABC):
     def matches(self, parameter: inspect.Parameter) -> bool: ...
 
     @abstractmethod
-    async def get_value(self, event: EventCommon): ...
+    async def get_value(self, event: EventCommon) -> Any: ...
 
     @abstractmethod
     def validate(self, parameter: inspect.Parameter, event: EventBuilder): ...
@@ -39,7 +38,7 @@ class EventParameterType(ParameterType):
                 or parameter.annotation is Message
                 or parameter.annotation.__name__.startswith('Update'))  # todo check for events.Raw[]
 
-    async def get_value(self, event: EventCommon):
+    async def get_value(self, event: EventCommon) -> Any:
         return event
 
     def validate(self, parameter: inspect.Parameter, event: EventBuilder):
@@ -53,7 +52,7 @@ class TextParameterType(ParameterType):
     def matches(self, parameter: inspect.Parameter) -> bool:
         return parameter.annotation is str
 
-    async def get_value(self, event: Message):
+    async def get_value(self, event: Message) -> Any:
         return event.raw_text
 
     def validate(self, parameter: inspect.Parameter, event: EventBuilder):
@@ -61,16 +60,11 @@ class TextParameterType(ParameterType):
             raise FoldsRuleArgumentException('Text argument can be used only with new message events.')
 
 
-class ChatParameterType(ParameterType, ABC):
-    def matches(self, parameter: inspect.Parameter) -> bool:
-        return parameter.annotation == ChatGetter
-
-
 class ReplyToParameterType(ParameterType):
     def matches(self, parameter: inspect.Parameter) -> bool:
         return parameter.annotation is ThisReplyTo
 
-    async def get_value(self, event: Message):
+    async def get_value(self, event: Message) -> Any:
         return await event.get_reply_message()
 
     def validate(self, parameter: inspect.Parameter, event: EventBuilder):
@@ -86,7 +80,7 @@ class SimpleMethodParameterType(ParameterType):
     def matches(self, parameter: inspect.Parameter) -> bool:
         return parameter.annotation is self.type
 
-    async def get_value(self, event: Message):
+    async def get_value(self, event: Message) -> Any:
         method = getattr(event, self.method_name)
         return await method()
 
