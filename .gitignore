@@ -2,3 +2,7 @@
 **/.folds/
 **/.venv/
 **/__pycache__/
+
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+node_modules/
