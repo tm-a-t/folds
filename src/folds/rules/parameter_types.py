@@ -35,7 +35,9 @@ class ParameterType(ABC):
 
 class EventParameterType(ParameterType):
     def matches(self, parameter: inspect.Parameter) -> bool:
-        return issubclass(parameter.annotation, EventCommon) or parameter.annotation is Message
+        return (issubclass(parameter.annotation, EventCommon)
+                or parameter.annotation is Message
+                or parameter.annotation.__name__.startswith('Update'))  # todo check for events.Raw[]
 
     async def get_value(self, event: EventCommon):
         return event
