@@ -58,19 +58,19 @@ Here are some methods that may be helpful:
 - `client.send_message()` is the general function that sends a message to some chat.
 The `client` object here represents the current Telethon's Telegram client and can be imported from `folds.context`.
 
-
 ```python
 from folds import Message
-from folds.context import client
+from folds.context import bot
 
 ...
+
 
 @bot.private_message
 async def f(message: Message):
     await message.respond('Searching for your query...')
     picture_url = ...  # find picture url for message.text
     await message.reply('Your result', file=picture_url)
-    await client.send_message(ADMIN_USER_ID, 'A user just made a query')
+    await bot.send_message(ADMIN_USER_ID, 'A user just made a query')
 ```
 
 For all the things you can do with messages, consult [Telethon docs.](https://docs.telethon.dev/en/stable/quick-references/objects-reference.html)

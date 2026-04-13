@@ -49,19 +49,9 @@ class App[T]:
 
 
     async def _run(self):
-        coroutines = [bot.authorize() for bot in self.bots]
+        coroutines = [bot.authorize_self() for bot in self.bots]
         await asyncio.gather(*coroutines)
 
-        logger.info('Folds app started')
-
-        coroutines = [bot.run_in_app() for bot in self.bots]
-        await asyncio.gather(*coroutines)
-
-    async def _run_test(self, coro):
-        coroutines = [bot.authorize() for bot in self.bots]
-        await asyncio.gather(*coroutines)
-
-        await coro
         logger.info('Folds app started')
 
         coroutines = [bot.run_in_app() for bot in self.bots]

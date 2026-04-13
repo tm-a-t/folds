@@ -3,7 +3,6 @@ import os
 
 from dotenv import load_dotenv
 from folds import Bot, Message
-from folds.context import client
 from telethon import events, Button
 from telethon.errors import ChatAdminRequiredError, MessageIdInvalidError, InlineBotRequiredError
 
@@ -24,7 +23,7 @@ async def f():
 @bot.channel_message
 async def f(message: Message):
     try:
-        await client.edit_message(message.chat_id, message.id, buttons=Button.inline('✔️ Mark as done', 'complete'))
+        await bot.edit_message(message.chat_id, message.id, buttons=Button.inline('✔️ Mark as done', 'complete'))
     except (ChatAdminRequiredError, MessageIdInvalidError, InlineBotRequiredError):
         # Bot is not an admin, or the message is uneditable (for example, a sticker)
         pass

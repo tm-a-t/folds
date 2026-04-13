@@ -31,12 +31,13 @@ Then you can use special context variables:
 
 ```python
 from folds import Skill
-from folds.context import bot, client
+from folds.context import bot
 
 skill = Skill()
 
+
 @skill.private_message
 async def f():
-    print(bot, client)
-    return 'You are speaking to @' + client.me.username
+    print(bot)
+    return 'You are speaking to @' + bot.me.username
 ```

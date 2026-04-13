@@ -6,7 +6,7 @@ from telethon.events.common import EventCommon
 from telethon.tl.custom import Message
 import telethon.tl.types as tl_types
 
-from folds.context import bot, client
+from folds.context import bot, bot
 from folds.rules.rule import Rule
 from folds.rules.rule_builder_factory import RuleBuilderFactory, RuleBuilderProtocol
 
@@ -72,7 +72,7 @@ def _is_command(text: str | None, command: str) -> bool:
     if not text:
         return False
     first_word = text.split(maxsplit=1)[0].lower()
-    bot_username = '@' + client.me.username.lower()
+    bot_username = '@' + bot.me.username.lower()
     return '/' + command == first_word.removesuffix(bot_username)
 
 

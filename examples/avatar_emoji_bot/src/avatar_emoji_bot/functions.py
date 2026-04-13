@@ -11,7 +11,7 @@ from telethon.types import Chat, Channel
 from telethon.utils import get_input_document
 
 from avatar_emoji_bot.utils import get_set_title, get_set_link, Emoji
-from folds.context import client
+from folds.context import bot
 
 mask_image = Image.open('mask.png').convert('L')
 fallback_emoji = '🟣'
@@ -31,36 +31,36 @@ async def update_or_create_set(chat: Chat | Channel, user_id: int) -> bool:
 
 
 async def _get_set(chat: Chat | Channel) -> tl_types.messages.StickerSet:
-    link = get_set_link(chat.id, client.me.username)
+    link = get_set_link(chat.id, bot.me.username)
     get_set_request = messages.GetStickerSetRequest(tl_types.InputStickerSetShortName(link), hash=randint(1, 10 ** 9))
-    return await client(get_set_request)
+    return await bot(get_set_request)
 
 
 async def _create_set(chat: Chat | Channel, user_id: int, emojis: list[Emoji]):
     title = get_set_title(chat.title)
-    link = get_set_link(chat.id, client.me.username)
+    link = get_set_link(chat.id, bot.me.username)
 
     request = stickers.CreateStickerSetRequest(user_id, title, link, emojis, emojis=True)
-    await client(request)
+    await bot(request)
 
 
 async def _update_set(chat: Chat | Channel, emoji_set: tl_types.messages.StickerSet, emojis: list[Emoji]):
     title = get_set_title(chat.title)
-    link = get_set_link(chat.id, client.me.username)
+    link = get_set_link(chat.id, bot.me.username)
     input_emoji_set = tl_types.InputStickerSetShortName(link)
 
     if emoji_set.set.title != title:
         update_title_request = stickers.RenameStickerSetRequest(input_emoji_set, title)
-        await client(update_title_request)
+        await bot(update_title_request)
 
     for emoji in emojis:
         add_request = stickers.AddStickerToSetRequest(input_emoji_set, emoji)
-        await client(add_request)
+        await bot(add_request)
 
     for document in emoji_set.documents:
         remove_request = stickers.RemoveStickerFromSetRequest(get_input_document(document))
         try:
-            await client(remove_request)
+            await bot(remove_request)
         except BadRequestError:
             pass
 
@@ -69,16 +69,16 @@ async def _create_emojis_from_profiles(chat: Chat | Channel) -> list[Emoji]:
     items = []
 
     if chat.photo:
-        photo: bytes = await client.download_profile_photo(chat, bytes)
+        photo: bytes = await bot.download_profile_photo(chat, bytes)
         items.append(await _create_emoji(photo))
 
-    async for user in client.iter_participants(chat):
+    async for user in bot.iter_participants(chat):
         if user.is_self:
             continue
         if user.photo is None or isinstance(user.photo, tl_types.UserProfilePhotoEmpty):
             continue
 
-        photo: bytes = await client.download_profile_photo(user, bytes)
+        photo: bytes = await bot.download_profile_photo(user, bytes)
         items.append(await _create_emoji(photo, keywords=user.username or None))
 
         if len(items) == 120:
@@ -91,10 +91,10 @@ async def _create_emojis_from_profiles(chat: Chat | Channel) -> list[Emoji]:
 async def _create_emoji(original_photo: bytes, *, keywords: str = None) -> Emoji:
     new_photo = _create_image(original_photo)
 
-    file = await client.upload_file(new_photo)
+    file = await bot.upload_file(new_photo)
     mime = 'image/webp'
     uploaded_document = tl_types.InputMediaUploadedDocument(file, mime, [])
-    media = await client(UploadMediaRequest(tl_types.InputPeerSelf(), uploaded_document))
+    media = await bot(UploadMediaRequest(tl_types.InputPeerSelf(), uploaded_document))
     input_document = get_input_document(media)
 
     return Emoji(input_document, fallback_emoji, new_photo, keywords=keywords)
@@ -114,7 +114,7 @@ def _create_image(original_photo: bytes) -> bytes:
 async def _get_emoji_set_hash_set(emoji_set: tl_types.messages.StickerSet):
     hash_set = set()
     for document in emoji_set.documents:
-        emoji_bytes = await client.download_file(document, bytes)
+        emoji_bytes = await bot.download_file(document, bytes)
         emoji_hash = hashlib.sha256(emoji_bytes).hexdigest()
         hash_set.add(emoji_hash)
     return hash_set
