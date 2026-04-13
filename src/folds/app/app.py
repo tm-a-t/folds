@@ -13,18 +13,20 @@ from folds.utils import require_env
 logger = logging.getLogger(__name__)
 
 
-class App:
+class App[T]:
     def __init__(
             self,
             api_id: int | None,
             api_hash: str | None,
             *,
+            context: T = None,
             default_session_directory: str | Path = DEFAULT_DATA_DIRECTORY,
             admin: Admin = EmptyAdmin(),
             **common_bot_kwargs,
     ):
         self.api_id = api_id or require_env('FOLDS_API_ID')
         self.api_hash = api_hash or require_env('FOLDS_API_HASH')
+        self.context = context
         self.default_session_directory = Path(default_session_directory)
         self.admin = admin
         self.common_bot_kwargs = common_bot_kwargs

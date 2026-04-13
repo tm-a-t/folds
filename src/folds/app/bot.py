@@ -8,7 +8,7 @@ from folds.app.bot_in_app import BotInApp
 from folds.utils import require_env
 
 
-class Bot(BotInApp):
+class Bot[T](BotInApp):
     """
     A single-bot app.
 
@@ -23,6 +23,7 @@ class Bot(BotInApp):
             *,
 
             # App args:
+            context: T = ...,
             default_session_directory: str | Path = DEFAULT_DATA_DIRECTORY,
             admin: Admin = EmptyAdmin(),
 
@@ -30,9 +31,10 @@ class Bot(BotInApp):
             parse_mode: Any = None,
             **telethon_client_kwargs,
     ):
-        app = App(
+        app = App[T](
             api_id=api_id,
             api_hash=api_hash,
+            context=context,
             default_session_directory=default_session_directory,
             admin=admin,
         )
