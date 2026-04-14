@@ -60,4 +60,4 @@ class BotInApp(BotClient, RuleBuilderSet):
         return new_function
 
     async def authorize_self(self):
-        await self.authorize(self.bot_token)
+        await self._authorize(self.bot_token)

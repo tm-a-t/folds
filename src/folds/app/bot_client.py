@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 class BotClient(TelegramClient):
     me: tl_types.User | None
 
-    async def authorize(self, bot_token: str):
+    async def _authorize(self, bot_token: str):
         await self.connect()
         self.me = await self.sign_in(bot_token=bot_token)
 
