@@ -20,7 +20,7 @@ async def f(chat: ThisChat):
     return f'I got a message from {chat.title}'
 ```
 
-If rewritten without `ThisChat`, the code becomes:
+This is equivalent to:
 
 ```python
 @bot.group_message

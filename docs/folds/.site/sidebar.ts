@@ -15,6 +15,7 @@ const sidebar: DefaultTheme.SidebarItem[] = [
   {
     text: 'Advanced Features',
     items: [
+      {text: 'App Resources', link: '/folds/advanced/resources'},
       {text: 'Admin Rules', link: '/folds/advanced/admin'},
       {text: 'Multiple Bots', link: '/folds/advanced/multiple-bots'},
     ],

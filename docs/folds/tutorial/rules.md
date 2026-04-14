@@ -55,12 +55,10 @@ Here are some methods that may be helpful:
 
 - `message.respond()` is the shortcut to send a new message to the same chat as `message`
 - `message.reply()` is the shortcut to send a new message as a reply to `message`
-- `client.send_message()` is the general function that sends a message to some chat.
-The `client` object here represents the current Telethon's Telegram client and can be imported from `folds.context`.
+- `bot.send_message()` is the general function that sends a message to some chat
 
 ```python
 from folds import Message
-from folds.context import bot
 
 ...
 
@@ -74,3 +72,5 @@ async def f(message: Message):
 ```
 
 For all the things you can do with messages, consult [Telethon docs.](https://docs.telethon.dev/en/stable/quick-references/objects-reference.html)
+
+Folds’ `Bot` inherits Telethon’s `Client` methods.

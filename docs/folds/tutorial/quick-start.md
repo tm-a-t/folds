@@ -18,7 +18,17 @@ pip install folds
 3. **Type the code:**
 
    ```python
-   (example)
+   from folds import Bot
+   
+   bot = Bot(bot_token, api_id, api_hash)
+   
+   
+   @bot.private_message
+   async def answer(text: str):
+       return 'You said: ' + text
+
+      
+   bot.run()
    ```
 
 4. **Run the app.**
