@@ -7,6 +7,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/avatar_emoji_bot" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/avatar_emoji_bot/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/friendbot" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/friendbot/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/smeshariki" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.folds" />
       <excludeFolder url="file://$MODULE_DIR$/.venv" />

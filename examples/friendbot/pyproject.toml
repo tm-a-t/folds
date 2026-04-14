@@ -1,0 +1,23 @@
+[project]
+name = "friendbot"
+version = "0.1.0"
+description = "Daily Telegram group poll bot for friend chats"
+requires-python = ">=3.12"
+dependencies = [
+    "apscheduler>=3.11.2",
+    "folds",
+    "python-dotenv>=1.2.2",
+]
+
+[project.scripts]
+friendbot = "friendbot.bot:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv.sources]
+folds = { workspace = true }
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/friendbot"]
