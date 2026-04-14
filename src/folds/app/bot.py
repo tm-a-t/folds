@@ -1,10 +1,11 @@
 from pathlib import Path
-from typing import Any
+from typing import Any, Self
 
 from folds.admin.admin import Admin, EmptyAdmin
 from folds.app import DEFAULT_DATA_DIRECTORY
 from folds.app.app import App
 from folds.app.bot_in_app import BotInApp
+from folds.app.lifespan import default_lifespan, Lifespan
 from folds.utils import require_env
 
 
@@ -24,6 +25,7 @@ class Bot[T](BotInApp):
 
             # App args:
             context: T = ...,
+            lifespan: Lifespan[Self] = default_lifespan,
             default_session_directory: str | Path = DEFAULT_DATA_DIRECTORY,
             admin: Admin = EmptyAdmin(),
 
@@ -35,6 +37,7 @@ class Bot[T](BotInApp):
             api_id=api_id,
             api_hash=api_hash,
             context=context,
+            lifespan=lifespan,
             default_session_directory=default_session_directory,
             admin=admin,
         )
