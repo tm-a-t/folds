@@ -5,8 +5,6 @@ from smeshariki.settings import Settings
 settings = Settings()
 
 app = App(
-    settings.api_id,
-    settings.api_hash,
     # connection=connection.ConnectionTcpMTProxyRandomizedIntermediate,
     # proxy=('80.211.160.148', 14443, '7316c4fbc53fb9f4e6784f2a68c01461'),
     admin=SimpleAdmin(user_ids=[254210206]),

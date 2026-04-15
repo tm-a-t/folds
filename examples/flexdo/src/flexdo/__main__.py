@@ -13,8 +13,7 @@ logging.basicConfig(
 )
 
 load_dotenv()
-bot_token, api_id, api_hash = os.environ['BOT_TOKEN'], int(os.environ['API_ID']), os.environ['API_HASH']
-bot = Bot(bot_token, api_id, api_hash, parse_mode='html')
+bot = Bot(parse_mode='html')
 
 @bot.private_message
 async def f():
