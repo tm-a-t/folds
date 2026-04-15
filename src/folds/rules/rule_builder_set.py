@@ -33,9 +33,15 @@ class BasicRuleBuilderSet(RuleBuilderFactory, ABC):
         self.group_commands = CommandRuleBuilderSet(self, lambda event: event.is_group)
         self.private_commands = CommandRuleBuilderSet(self, lambda event: event.is_private)
 
-        self.added_to_group: RuleBuilderProtocol = self.create_rule_builder(events.ChatAction(func=_added_to_group))
-        self.removed_from_group: RuleBuilderProtocol = self.create_rule_builder(events.ChatAction(func=_removed_from_group))
-        self.group_became_supergroup: RuleBuilderProtocol = self.create_rule_builder(events.ChatAction(func=_group_became_supergroup))
+        self.added_to_group: RuleBuilderProtocol = self.create_rule_builder(
+            events.ChatAction(func=_added_to_group)
+        )
+        self.removed_from_group: RuleBuilderProtocol = self.create_rule_builder(
+            events.ChatAction(func=_removed_from_group)
+        )
+        self.group_became_supergroup: RuleBuilderProtocol = self.create_rule_builder(
+            events.ChatAction(func=_group_became_supergroup)
+        )
 
         self.inline_query: RuleBuilderProtocol = self.create_rule_builder(events.InlineQuery())
 
@@ -43,7 +49,9 @@ class BasicRuleBuilderSet(RuleBuilderFactory, ABC):
 class RuleBuilderSet(BasicRuleBuilderSet, ABC):
     def __init__(self):
         super().__init__()
-        self.admin_commands: CommandRuleBuilderSet = CommandRuleBuilderSet(self, lambda event: bot.app.admin.is_authorized(event))
+        self.admin_commands: CommandRuleBuilderSet = CommandRuleBuilderSet(self,
+                                                                           lambda event: bot.app.admin.is_authorized(
+                                                                               event))
         self.admin: AdminRuleBuilderSet = AdminRuleBuilderSet(self._use_rule)
 
 
@@ -102,7 +110,6 @@ def _group_became_supergroup(event: events.ChatAction.Event) -> bool:
             isinstance(event, tl_types.UpdateNewChannelMessage)
             and isinstance(event.message, tl_types.MessageService)
             and isinstance(
-                event.message.action, tl_types.MessageActionChannelMigrateFrom
-            )
+        event.message.action, tl_types.MessageActionChannelMigrateFrom
     )
-
+    )

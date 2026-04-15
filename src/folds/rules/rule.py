@@ -48,7 +48,7 @@ class Rule:
 
     @classmethod
     def _validate_signature(cls, signature: inspect.Signature, event: EventBuilder):
-        for name, parameter in signature.parameters.items():
+        for parameter in signature.parameters.values():
             for parameter_type in parameter_types:
                 if parameter_type.matches(parameter):
                     parameter_type.validate(parameter, event)
@@ -60,7 +60,7 @@ class Rule:
         async def new_callback(update: EventCommon):
             check = filter_function(update)
             if not await await_if_needed(check):
-                return
+                return None
 
             return await self.callback(update)
 

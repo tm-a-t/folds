@@ -1,11 +1,10 @@
 import logging
+from datetime import datetime, timedelta
 
-from folds import Skill, Message, SystemMessage, ThisReplyTo, ThisChat
+from folds import Skill, Message, ThisReplyTo
 from smeshariki.app import ezhik_bot, barash_bot, losyash_bot
-
 from smeshariki.openai_client import ask
 from smeshariki.strings import all_bot_strings
-from datetime import datetime, timedelta
 
 logger = logging.getLogger(__name__)
 
@@ -40,7 +39,8 @@ async def _(message: Message, reply_to: ThisReplyTo):
     result = await ask(text)
     logger.info('Group %s, message %s --> %s', message.chat_id, message.id, result)
 
-    for strings, bot in (all_bot_strings.ezhik, ezhik_bot), (all_bot_strings.barash, barash_bot), (all_bot_strings.losyash, losyash_bot):
+    for strings, bot in ((all_bot_strings.ezhik, ezhik_bot), (all_bot_strings.barash, barash_bot),
+                         (all_bot_strings.losyash, losyash_bot)):
         for trigger in strings.phrases:
             if result.get(trigger) is True:
                 condition = message.chat_id, trigger

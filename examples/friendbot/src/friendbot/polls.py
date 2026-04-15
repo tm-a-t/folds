@@ -50,7 +50,8 @@ class PollService:
 
         return names
 
-    async def send_poll(self, client: TelegramClient, chat_ref: int, question: str, options: list[str], button: Button | None) -> None:
+    async def send_poll(self, client: TelegramClient, chat_ref: int, question: str, options: list[str],
+                        button: Button | None) -> None:
         poll_answers = [
             types.PollAnswer(text=types.TextWithEntities(text=option, entities=[]), option=f"{index}".encode("utf-8"))
             for index, option in enumerate(options, start=1)

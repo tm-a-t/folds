@@ -9,3 +9,18 @@ from folds.rules.parameter_types import ThisReplyTo, ThisChat, ThisSender, ThisI
 Message = _Message
 SystemMessage = _ChatAction.Event
 Query = _InlineQuery.Event
+
+__all__ = [
+    'Bot',
+    'App',
+    'BotInApp',
+    'Skill',
+    'Message',
+    'SystemMessage',
+    'Query',
+    'ThisReplyTo',
+    'ThisChat',
+    'ThisSender',
+    'ThisInputChat',
+    'ThisInputSender',
+]

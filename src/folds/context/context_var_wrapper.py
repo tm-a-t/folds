@@ -21,10 +21,10 @@ class ContextVarWrapper[T]:
     def _try_getting_value(self) -> T:
         try:
             return self.context_var.get()
-        except LookupError:
+        except LookupError as error:
             raise FoldsVariableException(
                 f"Variable '{self.context_var.name}' not found. It can only be used in rule functions."
-            )
+            ) from error
 
     def __getattr__(self, item):
         return getattr(self._try_getting_value(), item)

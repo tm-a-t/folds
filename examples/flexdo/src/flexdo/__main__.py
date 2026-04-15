@@ -1,10 +1,10 @@
 import logging
-import os
 
 from dotenv import load_dotenv
-from folds import Bot, Message
 from telethon import events, Button
 from telethon.errors import ChatAdminRequiredError, MessageIdInvalidError, InlineBotRequiredError
+
+from folds import Bot, Message
 
 logging.basicConfig(
     format='%(asctime)s    %(levelname)s  %(message)s    %(pathname)s:%(lineno)d',

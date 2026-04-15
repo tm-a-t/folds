@@ -21,6 +21,18 @@ folds = { workspace = true }
 [tool.uv.workspace]
 members = ["examples/*"]
 
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "TCH"]
+ignore = ["F811", "B008"]
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.10",
+]

@@ -1,6 +1,6 @@
 import re
 from abc import ABC, abstractmethod
-from typing import Callable, Protocol, cast, Any
+from typing import Callable, Protocol, cast
 
 from telethon.events.common import EventBuilder
 
@@ -21,13 +21,13 @@ class RuleBuilderFactory(ABC):
             _event = event
             _use_rule = self._use_rule
 
-        return cast(RuleBuilderProtocol, NewRuleDecorator)
+        return cast('RuleBuilderProtocol', NewRuleDecorator)
 
     def on(self, event: EventBuilder) -> Callable[[RuleCallback], RuleCallback]:
         return self.create_rule_builder(event)()
 
 
-class RuleDecorator(ABC):
+class RuleDecorator(ABC):  # noqa: B024
     """
     An object that decorates a handler function to create a rule.
     """
@@ -35,7 +35,13 @@ class RuleDecorator(ABC):
     _event: EventBuilder = NotImplemented
     _use_rule: Callable[[Rule], None] = NotImplemented
 
-    def __new__(cls, function: RuleCallback | None = None, *, regex: str | re.Pattern | None = None) -> 'RuleDecorator | RuleCallback':
+    def __new__(
+            cls,
+            function: RuleCallback | None = None,
+            *,
+            regex: str | re.Pattern | None = None,
+    ) -> 'RuleDecorator | RuleCallback':
+
         instance = super().__new__(cls)
         instance.regex = re.compile(regex) if isinstance(regex, str) else regex
 

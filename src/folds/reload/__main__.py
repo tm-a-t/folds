@@ -1,6 +1,6 @@
 import sys
 
-from watchfiles import run_process, watch
+from watchfiles import run_process
 
 from folds.reload.watcher import watcher
 
