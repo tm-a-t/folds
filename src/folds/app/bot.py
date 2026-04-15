@@ -2,11 +2,10 @@ from pathlib import Path
 from typing import Any, Self
 
 from folds.admin.admin import Admin, EmptyAdmin
-from folds.app import DEFAULT_DATA_DIRECTORY
 from folds.app.app import App
 from folds.app.bot_in_app import BotInApp
 from folds.app.lifespan import default_lifespan, Lifespan
-from folds.utils import require_env
+from folds.env_settings import settings
 
 
 class Bot[T](BotInApp):
@@ -26,7 +25,7 @@ class Bot[T](BotInApp):
             # App args:
             context: T = ...,
             lifespan: Lifespan[Self] = default_lifespan,
-            default_session_directory: str | Path = DEFAULT_DATA_DIRECTORY,
+            default_session_directory: str | Path | None = None,
             admin: Admin = EmptyAdmin(),
 
             # Bot args:
@@ -42,7 +41,7 @@ class Bot[T](BotInApp):
             admin=admin,
         )
         super().__init__(
-            token=token or require_env('FOLDS_BOT_TOKEN'),
+            token=token or settings.bot_token,
             app=app,
             parse_mode=parse_mode,
             **telethon_client_kwargs,

@@ -1,1 +1,0 @@
-DEFAULT_DATA_DIRECTORY = '.folds'

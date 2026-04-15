@@ -8,10 +8,9 @@ from telethon.helpers import get_running_loop
 from telethon.sessions import Session
 
 from folds.admin.admin import Admin, EmptyAdmin
-from folds.app import DEFAULT_DATA_DIRECTORY
 from folds.app.bot_in_app import BotInApp
 from folds.app.lifespan import default_lifespan, Lifespan
-from folds.utils import require_env
+from folds.env_settings import settings
 
 logger = logging.getLogger(__name__)
 
@@ -24,15 +23,15 @@ class App[T]:
             *,
             context: T = None,
             lifespan: Lifespan[Self] = default_lifespan,
-            default_session_directory: str | Path = DEFAULT_DATA_DIRECTORY,
+            default_session_directory: str | Path | None = None,
             admin: Admin = EmptyAdmin(),
             **common_bot_kwargs,
     ):
-        self.api_id = api_id or require_env('FOLDS_API_ID')
-        self.api_hash = api_hash or require_env('FOLDS_API_HASH')
+        self.api_id = api_id or settings.api_id
+        self.api_hash = api_hash or settings.api_hash
         self.context = context
         self.lifespan = lifespan
-        self.default_session_directory = Path(default_session_directory)
+        self.default_session_directory = Path(default_session_directory or settings.data_directory)
         self.admin = admin
         self.common_bot_kwargs = common_bot_kwargs
 
