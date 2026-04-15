@@ -4,7 +4,7 @@ on:
       - main
 
 jobs:
-  meow:
+  build:
     runs-on: ubuntu-latest
     permissions: write-all
     strategy:
@@ -30,6 +30,10 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           file: examples/${{ matrix.project }}/Dockerfile
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy
         env:
           POMOGITE: ${{ secrets.POMOGITE }}
