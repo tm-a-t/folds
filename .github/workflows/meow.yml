@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        project: [avatar_emoji_bot, flexdo, smeshariki]
+        project: [avatar_emoji_bot, flexdo, smeshariki, friendbot]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,7 +35,7 @@ jobs:
           POMOGITE: ${{ secrets.POMOGITE }}
         run: |
           curl --request POST \
-               --url https://vhap-update.vanutp.dev/update \
+               --url https://vhap-update-collective.vanutp.dev/update \
                --header "Content-Type: application/json" \
                --data '{"key":"'$POMOGITE'"}' \
                --fail
