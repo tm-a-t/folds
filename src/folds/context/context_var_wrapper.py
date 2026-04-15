@@ -1,5 +1,6 @@
 from contextlib import contextmanager
 from contextvars import ContextVar
+from typing import Any
 
 from folds.exceptions import FoldsVariableException
 
@@ -26,8 +27,8 @@ class ContextVarWrapper[T]:
                 f"Variable '{self.context_var.name}' not found. It can only be used in rule functions."
             ) from error
 
-    def __getattr__(self, item):
+    def __getattr__(self, item: str) -> Any:
         return getattr(self._try_getting_value(), item)
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args: Any, **kwargs: Any) -> Any:
         return self._try_getting_value()(*args, **kwargs)

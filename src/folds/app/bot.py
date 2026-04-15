@@ -30,7 +30,7 @@ class Bot[T](BotInApp):
 
             # Bot args:
             parse_mode: Any = None,
-            **telethon_client_kwargs,
+            **telethon_client_kwargs: Any,
     ):
         app = App[T](
             api_id=api_id,

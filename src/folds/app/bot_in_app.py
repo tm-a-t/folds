@@ -1,5 +1,6 @@
 from pathlib import Path
 
+from telethon.events.common import EventCommon
 from telethon.sessions import Session
 
 from folds.app.bot_client import BotClient
@@ -26,7 +27,7 @@ class BotInApp(BotClient, RuleBuilderSet):
             app: 'App',
             session: str | Path | Session | None = None,
             parse_mode: Any = None,
-            **kwargs,
+            **kwargs: Any,
     ):
         RuleBuilderSet.__init__(self)
 
@@ -52,7 +53,7 @@ class BotInApp(BotClient, RuleBuilderSet):
         self.add_event_handler(callback, rule.event)
 
     def _transform_callback(self, callback: PreparedRuleCallback) -> PreparedRuleCallback:
-        async def new_function(event):
+        async def new_function(event: EventCommon):
             with bot.using(self):
                 await callback(event)
 

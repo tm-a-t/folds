@@ -1,6 +1,7 @@
 import re
 from abc import ABC, abstractmethod
-from typing import Callable, Protocol, cast
+from typing import Protocol, cast
+from collections.abc import Callable
 
 from telethon.events.common import EventBuilder
 

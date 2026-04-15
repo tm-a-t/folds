@@ -1,5 +1,6 @@
 from abc import ABC
-from typing import Callable, Any
+from typing import Any
+from collections.abc import Callable
 
 from telethon import events
 from telethon.events.common import EventCommon
@@ -69,8 +70,8 @@ class CommandRuleBuilderSet:
         self._condition_set = condition_set
         self._filter_function = filter_function
 
-    def __getattr__(self, command: str):
-        def filter_events(event: Message):
+    def __getattr__(self, command: str) -> RuleBuilderProtocol:
+        def filter_events(event: Message) -> bool:
             return _is_command(event.raw_text, command) and self._filter_function(event)
 
         return self._condition_set.create_rule_builder(events.NewMessage(func=filter_events, incoming=True))

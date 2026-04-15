@@ -1,10 +1,12 @@
 import inspect
 from abc import ABC, abstractmethod
-from typing import Annotated, Callable, Awaitable, Any
+from typing import Annotated, Any
+from collections.abc import Callable, Awaitable
 
 import telethon.tl.types as tl_types
 from telethon import events
 from telethon.events.common import EventBuilder as EventBuilder, EventCommon
+from telethon.tl import TLObject
 from telethon.tl.custom import Message
 
 from folds.exceptions import FoldsRuleArgumentException
@@ -16,6 +18,7 @@ type ThisInputChat = tl_types.InputPeerChat | tl_types.InputPeerChannel | tl_typ
 type ThisInputSender = tl_types.InputPeerUser | tl_types.InputChannel
 
 type RuleCallback = Callable[..., Awaitable[str | None]]
+
 
 class ParameterType(ABC):
     """
@@ -73,7 +76,7 @@ class ReplyToParameterType(ParameterType):
 
 
 class SimpleMethodParameterType(ParameterType):
-    def __init__(self, method_name: str, type_):
+    def __init__(self, method_name: str, type_: TLObject):
         self.method_name = method_name
         self.type = type_
 

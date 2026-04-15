@@ -1,6 +1,7 @@
 import inspect
 from dataclasses import dataclass
-from typing import Callable, Any, Awaitable
+from typing import Any, Self
+from collections.abc import Callable, Awaitable
 
 from telethon.events.common import EventBuilder as EventBuilder, EventCommon
 
@@ -8,7 +9,7 @@ from folds.rules.parameter_types import parameter_types, RuleCallback
 from folds.utils import await_if_needed
 from folds.exceptions import FoldsRuleArgumentException
 
-PreparedRuleCallback = Callable[[EventCommon], Awaitable[None]]
+PreparedRuleCallback = Callable[[EventCommon], Awaitable[Any]]
 
 
 @dataclass(frozen=True)
@@ -21,7 +22,7 @@ class Rule:
     callback: PreparedRuleCallback
 
     @classmethod
-    def from_function(cls, event: EventBuilder, callback_function: RuleCallback):
+    def from_function(cls, event: EventBuilder, callback_function: RuleCallback) -> Self:
         filter_function = event.func or (lambda x: True)
 
         signature = inspect.signature(callback_function)
@@ -57,7 +58,7 @@ class Rule:
                 raise FoldsRuleArgumentException(f"Cannot infer '{parameter}' for {event}.")
 
     def with_extra_condition(self, filter_function: Callable[[EventCommon], Any]) -> 'Rule':
-        async def new_callback(update: EventCommon):
+        async def new_callback(update: EventCommon) -> Any:
             check = filter_function(update)
             if not await await_if_needed(check):
                 return None

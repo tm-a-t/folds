@@ -2,7 +2,7 @@ import asyncio
 import logging
 from contextlib import suppress
 from pathlib import Path
-from typing import Self
+from typing import Self, Any
 
 from telethon.helpers import get_running_loop
 from telethon.sessions import Session
@@ -25,7 +25,7 @@ class App[T]:
             lifespan: Lifespan[Self] = default_lifespan,
             default_session_directory: str | Path | None = None,
             admin: Admin = EmptyAdmin(),
-            **common_bot_kwargs,
+            **common_bot_kwargs: Any,
     ):
         self.api_id = api_id or settings.api_id
         self.api_hash = api_hash or settings.api_hash
@@ -37,7 +37,7 @@ class App[T]:
 
         self.bots: list[BotInApp] = []
 
-    def create_bot(self, token: str, *, session: str | Path | Session | None = None, **kwargs) -> BotInApp:
+    def create_bot(self, token: str, *, session: str | Path | Session | None = None, **kwargs: Any) -> BotInApp:
         bot = BotInApp(
             token,
             app=self,
