@@ -18,8 +18,8 @@ logger = logging.getLogger(__name__)
 class App[T]:
     def __init__(
             self,
-            api_id: int | None,
-            api_hash: str | None,
+            api_id: int | None = None,
+            api_hash: str | None = None,
             *,
             context: T = None,
             lifespan: Lifespan[Self] = default_lifespan,
