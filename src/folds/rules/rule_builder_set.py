@@ -81,7 +81,7 @@ def _is_command(text: str | None, command: str) -> bool:
     if not text:
         return False
     first_word = text.split(maxsplit=1)[0].lower()
-    bot_username = '@' + bot.me.username.lower()
+    bot_username = '@' + bot.username.lower()
     return '/' + command == first_word.removesuffix(bot_username)
 
 

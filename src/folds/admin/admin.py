@@ -17,7 +17,7 @@ class EmptyAdmin(Admin):
 
 class SimpleAdmin(Admin):
     user_ids: list[int]
-    chat_id: int
+    chat_id: int | None
 
     def __init__(self, *, user_ids: list[int] | None = None, chat_id: int | None = None):
         self.user_ids = user_ids or []

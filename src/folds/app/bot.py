@@ -1,8 +1,8 @@
 from pathlib import Path
-from typing import Any, Self
+from typing import Any
 
 from folds.admin.admin import Admin, EmptyAdmin
-from folds.app.app import App
+from folds.app.app import App, _empty_context
 from folds.app.bot_in_app import BotInApp
 from folds.app.lifespan import default_lifespan, Lifespan
 from folds.env_settings import settings
@@ -23,8 +23,8 @@ class Bot[T](BotInApp):
             *,
 
             # App args:
-            context: T = ...,
-            lifespan: Lifespan[Self] = default_lifespan,
+            context: T = _empty_context,  # ty: ignore[invalid-parameter-default]
+            lifespan: Lifespan[App] = default_lifespan,
             default_session_directory: str | Path | None = None,
             admin: Admin = EmptyAdmin(),
 

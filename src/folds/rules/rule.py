@@ -1,13 +1,13 @@
 import inspect
-from dataclasses import dataclass
-from typing import Any, Self
 from collections.abc import Callable, Awaitable
+from dataclasses import dataclass
+from typing import Any
 
 from telethon.events.common import EventBuilder as EventBuilder, EventCommon
 
+from folds.exceptions import FoldsRuleArgumentException
 from folds.rules.parameter_types import parameter_types, RuleCallback
 from folds.utils import await_if_needed
-from folds.exceptions import FoldsRuleArgumentException
 
 PreparedRuleCallback = Callable[[EventCommon], Awaitable[Any]]
 
@@ -22,7 +22,7 @@ class Rule:
     callback: PreparedRuleCallback
 
     @classmethod
-    def from_function(cls, event: EventBuilder, callback_function: RuleCallback) -> Self:
+    def from_function(cls, event: EventBuilder, callback_function: RuleCallback) -> 'Rule':
         filter_function = event.func or (lambda x: True)
 
         signature = inspect.signature(callback_function)

@@ -23,9 +23,9 @@ async def _(message: Message, reply_to: ThisReplyTo):
     name: str | None = None
     if reply_to:
         name = {
-            ezhik_bot._client.me.id: 'Ёжик',
-            barash_bot._client.me.id: 'Бараш',
-            losyash_bot._client.me.id: 'Лосяш',
+            ezhik_bot.me.id: 'Ёжик',
+            barash_bot.me.id: 'Бараш',
+            losyash_bot.me.id: 'Лосяш',
         }.get(reply_to.sender_id)
 
     if name is None and len(message.raw_text or '') < 8 or len(message.raw_text) < 3:

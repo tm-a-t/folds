@@ -12,3 +12,7 @@ class FoldsVariableException(Exception):
 
 class FoldsAdminException(Exception):
     pass
+
+
+class FoldsInternalException(Exception):
+    pass

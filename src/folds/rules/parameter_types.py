@@ -1,12 +1,11 @@
 import inspect
 from abc import ABC, abstractmethod
-from typing import Annotated, Any
 from collections.abc import Callable, Awaitable
+from typing import Annotated, Any
 
 import telethon.tl.types as tl_types
 from telethon import events
 from telethon.events.common import EventBuilder as EventBuilder, EventCommon
-from telethon.tl import TLObject
 from telethon.tl.custom import Message
 
 from folds.exceptions import FoldsRuleArgumentException
@@ -20,7 +19,7 @@ type ThisInputSender = tl_types.InputPeerUser | tl_types.InputChannel
 type RuleCallback = Callable[..., Awaitable[str | None]]
 
 
-class ParameterType(ABC):
+class ParameterType[E: EventCommon](ABC):
     """
     Computes the value of a rule argument based on its type hint.
     """
@@ -29,7 +28,7 @@ class ParameterType(ABC):
     def matches(self, parameter: inspect.Parameter) -> bool: ...
 
     @abstractmethod
-    async def get_value(self, event: EventCommon) -> Any: ...
+    async def get_value(self, event: E) -> Any: ...
 
     @abstractmethod
     def validate(self, parameter: inspect.Parameter, event: EventBuilder): ...
@@ -76,7 +75,7 @@ class ReplyToParameterType(ParameterType):
 
 
 class SimpleMethodParameterType(ParameterType):
-    def __init__(self, method_name: str, type_: TLObject):
+    def __init__(self, method_name: str, type_: Any):
         self.method_name = method_name
         self.type = type_
 

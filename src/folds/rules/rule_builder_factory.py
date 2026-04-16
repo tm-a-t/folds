@@ -33,8 +33,10 @@ class RuleDecorator(ABC):  # noqa: B024
     An object that decorates a handler function to create a rule.
     """
 
-    _event: EventBuilder = NotImplemented
-    _use_rule: Callable[[Rule], None] = NotImplemented
+    _event: EventBuilder
+    _use_rule: Callable[[Rule], None]
+
+    _regex: re.Pattern[str] | None
 
     def __new__(
             cls,
@@ -44,7 +46,7 @@ class RuleDecorator(ABC):  # noqa: B024
     ) -> 'RuleDecorator | RuleCallback':
 
         instance = super().__new__(cls)
-        instance.regex = re.compile(regex) if isinstance(regex, str) else regex
+        instance._regex = re.compile(regex) if isinstance(regex, str) else regex
 
         if function is not None:
             return instance(function)
@@ -52,12 +54,18 @@ class RuleDecorator(ABC):  # noqa: B024
 
     def __call__(self, function: RuleCallback) -> RuleCallback:
         rule = Rule.from_function(self._event, function)
-        if self.regex is not None:
-            rule = rule.with_extra_condition(lambda event: bool(re.search(self.regex, event.raw_text)))
+        regex = self._regex
+        if regex is not None:
+            rule = rule.with_extra_condition(lambda event: bool(re.search(regex, event.raw_text or '')))
 
         self._use_rule(rule)
         return function
 
 
 class RuleBuilderProtocol(Protocol):
-    def __call__(self, *, regex: str | re.Pattern | None = None) -> RuleDecorator: ...
+    def __call__(
+            self,
+            function: RuleCallback | None = None,
+            *,
+            regex: str | re.Pattern | None = None,
+    ) -> RuleDecorator: ...

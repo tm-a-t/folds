@@ -31,4 +31,4 @@ class ContextVarWrapper[T]:
         return getattr(self._try_getting_value(), item)
 
     def __call__(self, *args: Any, **kwargs: Any) -> Any:
-        return self._try_getting_value()(*args, **kwargs)
+        return self._try_getting_value()(*args, **kwargs)   # ty: ignore[call-non-callable]

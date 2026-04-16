@@ -12,7 +12,7 @@ class Skill(RuleBuilderSet):
         self._rules: list[Rule] = []
 
     @property
-    def rules(self) -> list[Rule]:
+    def rules(self) -> tuple[Rule, ...]:
         return tuple(self._rules)
 
     def _use_rule(self, rule: Rule):

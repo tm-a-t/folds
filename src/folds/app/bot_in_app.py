@@ -4,7 +4,7 @@ from telethon.events.common import EventCommon
 from telethon.sessions import Session
 
 from folds.app.bot_client import BotClient
-from folds.context import bot
+from folds.context.vars import bot
 from folds.rules.rule_builder_set import RuleBuilderSet
 from folds.app.skill import Skill
 from folds.rules.rule import Rule, PreparedRuleCallback
@@ -38,7 +38,7 @@ class BotInApp(BotClient, RuleBuilderSet):
         BotClient.__init__(self, session, self.app.api_id, self.app.api_hash, **kwargs)
         self.parse_mode = parse_mode
 
-    def _generate_session_filepath(self) -> str:
+    def _generate_session_filepath(self) -> Path:
         self.app.default_session_directory.mkdir(exist_ok=True)
         filename = 'bot' + self.bot_token.split(':')[0]
         return self.app.default_session_directory / filename

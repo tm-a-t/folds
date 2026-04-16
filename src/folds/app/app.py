@@ -15,13 +15,15 @@ from folds.env_settings import settings
 logger = logging.getLogger(__name__)
 
 
+_empty_context = object()
+
 class App[T]:
     def __init__(
             self,
             api_id: int | None = None,
             api_hash: str | None = None,
             *,
-            context: T = None,
+            context: T = _empty_context,  # ty: ignore[invalid-parameter-default]
             lifespan: Lifespan[Self] = default_lifespan,
             default_session_directory: str | Path | None = None,
             admin: Admin = EmptyAdmin(),
