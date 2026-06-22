@@ -64,7 +64,7 @@ async def f():
 :::
 
 <!-- 
-(See the Papercraft Book on [group bots]&#40;../../book/chats/groups&#41; and [supergroups.]&#40;../../book/chats/supergroups&#41;) 
+(See the Papercraft Book on [group bots]&#40;../../book/groups&#41; and [supergroups.]&#40;../../book/chats/supergroups&#41;) 
 -->
 
 #### Supporting inline mode

@@ -51,7 +51,7 @@ Folds is built on top of Telethon, a Telegram API library. This means Folds does
 
 - No limitations.
   Folds doesn't have natural limitations that Bot API has:
-  see [the API explanation](/book/dev/api) and [the comparison table](/book/appendix/api-comparison) 
+  see [the API explanation](/book/api) and [the comparison table](/book/api-comparison) 
   from the Papercraft Book for details.
 - Reuse code for userbots. 
   When you are familiar with Telethon concepts, 
