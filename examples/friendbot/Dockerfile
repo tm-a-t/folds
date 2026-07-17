@@ -6,6 +6,7 @@ WORKDIR /app
 FROM base as builder
 ENV UV_COMPILE_BYTECODE=1
 ENV UV_LINK_MODE=copy
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
 COPY pyproject.toml uv.lock ./
 COPY examples/friendbot/pyproject.toml examples/friendbot/
