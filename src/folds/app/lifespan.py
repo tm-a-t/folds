@@ -1,13 +1,11 @@
 from collections.abc import Callable
-from contextlib import asynccontextmanager
+from contextlib import asynccontextmanager, AbstractAsyncContextManager
 from typing import TYPE_CHECKING
-
-from typing_extensions import AsyncContextManager
 
 if TYPE_CHECKING:
     from .app import App
 
-type Lifespan[T] = Callable[[T], AsyncContextManager]
+type Lifespan[T] = Callable[[T], AbstractAsyncContextManager]
 
 
 @asynccontextmanager
