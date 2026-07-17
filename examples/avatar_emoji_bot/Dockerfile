@@ -1,28 +1,31 @@
-FROM python:3.12-slim as base
+FROM python:3.13-slim-trixie as builder
 WORKDIR /app
 
-FROM base as builder
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 ENV UV_COMPILE_BYTECODE=1
 ENV UV_LINK_MODE=copy
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/
 
+# distroless python is at /usr/bin/python
+RUN ln -s /usr/local/bin/python /usr/bin/python
+
 COPY pyproject.toml uv.lock ./
 COPY examples/avatar_emoji_bot/pyproject.toml examples/avatar_emoji_bot/
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --project examples/avatar_emoji_bot --no-editable --frozen --no-dev --no-install-workspace
+    uv sync --python /usr/bin/python --project examples/avatar_emoji_bot --no-editable --frozen --no-dev --no-install-workspace
 
 COPY . .
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --project examples/avatar_emoji_bot --no-editable --frozen --no-dev
+    uv sync --python /usr/bin/python --project examples/avatar_emoji_bot --no-editable --frozen --no-dev
 
-FROM base as runner
+FROM gcr.io/distroless/python3-debian13:debug
+WORKDIR /app
 COPY --from=builder /app/.venv .venv
 COPY examples/avatar_emoji_bot/mask.png ./
 ENV PATH="/app/.venv/bin:$PATH"
 
 VOLUME /app/.folds
 
-CMD ["python", "-m", "avatar_emoji_bot"]
+ENTRYPOINT ["python", "-m", "avatar_emoji_bot"]

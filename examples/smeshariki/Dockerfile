@@ -1,28 +1,31 @@
-FROM python:3.12-slim as base
+FROM python:3.13-slim-trixie as builder
 WORKDIR /app
 
-FROM base as builder
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 ENV UV_COMPILE_BYTECODE=1
 ENV UV_LINK_MODE=copy
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
 
+# distroless python is at /usr/bin/python
+RUN ln -s /usr/local/bin/python /usr/bin/python
+
 COPY pyproject.toml uv.lock ./
 COPY examples/smeshariki/pyproject.toml examples/smeshariki/
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --project examples/smeshariki --no-editable --frozen --no-dev --no-install-workspace
+    uv sync --python /usr/bin/python --project examples/smeshariki --no-editable --frozen --no-dev --no-install-workspace
 
 COPY . .
 
 RUN --mount=type=cache,target=/root/.cache/uv \
-    uv sync --project examples/smeshariki --no-editable --frozen --no-dev
+    uv sync --python /usr/bin/python --project examples/smeshariki --no-editable --frozen --no-dev
 
-FROM base as runner
+FROM gcr.io/distroless/python3-debian13:debug
+WORKDIR /app
 COPY --from=builder /app/.venv .venv
 COPY examples/smeshariki/strings.yml ./
 ENV PATH="/app/.venv/bin:$PATH"
 
 VOLUME /app/.folds
 
-CMD ["python", "-m", "smeshariki"]
+ENTRYPOINT ["python", "-m", "smeshariki"]
