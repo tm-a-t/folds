@@ -10,6 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/examples/friendbot" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/friendbot/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/examples/smeshariki" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/examples/comment_enforcer" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.folds" />
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
     </content>
