@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        project: [avatar_emoji_bot, flexdo, smeshariki, friendbot]
+        project: [avatar_emoji_bot, flexdo, smeshariki, friendbot, comment_enforcer]
     steps:
       - name: Checkout
         uses: actions/checkout@v4

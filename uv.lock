@@ -85,7 +85,7 @@ wheels = [
 [[package]]
 name = "comment-enforcer"
 version = "0.1.0"
-source = { virtual = "examples/comment_enforcer" }
+source = { editable = "examples/comment_enforcer" }
 dependencies = [
     { name = "folds" },
     { name = "python-dotenv" },

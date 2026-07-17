@@ -6,3 +6,10 @@ dependencies = [
     "folds",
     "python-dotenv>=1.0.1",
 ]
+
+[project.scripts]
+comment-enforcer = "comment_enforcer:__main__"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
