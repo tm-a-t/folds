@@ -11,12 +11,13 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
-    "telethon~=1.42.0",
+    "telethon>=1.44.0",
     "watchfiles~=1.1.1",
 ]
 
 [tool.uv.sources]
 folds = { workspace = true }
+telethon = { git = "https://codeberg.org/Lonami/Telethon.git" }
 
 [tool.uv.workspace]
 members = ["examples/*"]
