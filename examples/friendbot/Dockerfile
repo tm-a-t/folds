@@ -1,9 +1,8 @@
 FROM python:3.12-slim as base
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
-
 WORKDIR /app
 
 FROM base as builder
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 ENV UV_COMPILE_BYTECODE=1
 ENV UV_LINK_MODE=copy
 RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
