@@ -33,4 +33,4 @@ ENV LOG_LEVEL=INFO
 
 VOLUME /data
 
-ENTRYPOINT ["python", "friendbot"]
+ENTRYPOINT ["python", "-m", "friendbot"]
