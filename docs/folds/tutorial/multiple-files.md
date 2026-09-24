@@ -9,9 +9,11 @@ from folds import skill
 
 skill = Skill()
 
+
 @skill.private_message
 async def f():
     return 'Hi'
+
 
 bot.use(skill)
 ```
