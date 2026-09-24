@@ -39,10 +39,14 @@ pip install folds
 This is an experimental feature: it may break.
 :::
 
+::: info
+This requires `watchfiles` dependency. You can install folds using `folds[reload]` to add it automatically.
+:::
+
 If your program is a Python module (which means a directory with `__init__.py`,) you can run it with the command:
 
 ```shell
-python -m paper.reload app
+python -m folds.reload app
 ```
 
 Now, your program will restart every time you change files in the app directory.
