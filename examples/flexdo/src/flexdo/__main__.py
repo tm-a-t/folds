@@ -35,11 +35,11 @@ async def f(event: events.CallbackQuery.Event):
     message = await event.get_message()
     source: str | None = message.text
     if event.data == b'complete':
-        text = f'✅ <del>{source}</del>' if source else '✅'
+        text = f'✅ <s>{source}</s>' if source else '✅'
         button = Button.inline('Mark as undone', 'uncomplete')
         await event.edit(text, buttons=button, parse_mode='html')
     elif event.data == b'uncomplete':
-        text = source.removeprefix('✅ ').removeprefix('<del>').removesuffix('</del>') if source else None
+        text = source.removeprefix('✅ ').removeprefix('<s>').removesuffix('</s>') if source else None
         button = Button.inline('✔️ Mark as done', 'complete')
         await event.edit(text, buttons=button, parse_mode='html')
 
