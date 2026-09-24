@@ -1,7 +1,7 @@
 import re
 from abc import ABC, abstractmethod
-from typing import Protocol, cast
 from collections.abc import Callable
+from typing import Protocol, cast
 
 from telethon.events.common import EventBuilder
 
@@ -39,10 +39,10 @@ class RuleDecorator(ABC):  # noqa: B024
     _regex: re.Pattern[str] | None
 
     def __new__(
-            cls,
-            function: RuleCallback | None = None,
-            *,
-            regex: str | re.Pattern | None = None,
+        cls,
+        function: RuleCallback | None = None,
+        *,
+        regex: str | re.Pattern | None = None,
     ) -> 'RuleDecorator | RuleCallback':
 
         instance = super().__new__(cls)
@@ -64,8 +64,8 @@ class RuleDecorator(ABC):  # noqa: B024
 
 class RuleBuilderProtocol(Protocol):
     def __call__(
-            self,
-            function: RuleCallback | None = None,
-            *,
-            regex: str | re.Pattern | None = None,
+        self,
+        function: RuleCallback | None = None,
+        *,
+        regex: str | re.Pattern | None = None,
     ) -> RuleDecorator: ...

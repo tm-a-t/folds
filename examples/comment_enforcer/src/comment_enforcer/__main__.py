@@ -15,9 +15,11 @@ logging.basicConfig(
 load_dotenv()
 bot = Bot(parse_mode='html')
 
-explanation_text = ('Привет, в этом чате можно писать только ответы на другие сообщения '
-                    '(так читатели комментариев ничего не пропустят). '
-                    'Я удалил твоё сообщение, можешь скопировать его и отправить ответом:')
+explanation_text = (
+    'Привет, в этом чате можно писать только ответы на другие сообщения '
+    '(так читатели комментариев ничего не пропустят). '
+    'Я удалил твоё сообщение, можешь скопировать его и отправить ответом:'
+)
 
 
 @bot.private_message
@@ -39,16 +41,18 @@ async def f(message: Message):
 
     # At the time of writing, normal message sending functions don't support ephemeral messages
     await bot(SendMessageRequest(message.chat_id, message.sender_id, explanation_text))
-    await bot(SendMessageRequest(
-        message.chat_id,
-        message.sender_id,
-        message.raw_text,
-        None,
-        message.entities,
-        message.media,
-        None,
-        message.rich_message,
-    ))
+    await bot(
+        SendMessageRequest(
+            message.chat_id,
+            message.sender_id,
+            message.raw_text,
+            None,
+            message.entities,
+            message.media,
+            None,
+            message.rich_message,
+        )
+    )
 
     return None
 

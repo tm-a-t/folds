@@ -36,6 +36,7 @@ from folds import Message
 
 ...
 
+
 @bot.private_message
 async def f(message: Message):
     if message.photo is not None:

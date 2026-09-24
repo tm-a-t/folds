@@ -1,8 +1,8 @@
 import logging
 
 from dotenv import load_dotenv
-from telethon import events, Button
-from telethon.errors import ChatAdminRequiredError, MessageIdInvalidError, InlineBotRequiredError
+from telethon import Button, events
+from telethon.errors import ChatAdminRequiredError, InlineBotRequiredError, MessageIdInvalidError
 
 from folds import Bot, Message
 
@@ -15,9 +15,11 @@ logging.basicConfig(
 load_dotenv()
 bot = Bot(parse_mode='html')
 
+
 @bot.private_message
 async def f():
     return 'Please add me to a channel first!'
+
 
 @bot.channel_message
 async def f(message: Message):
@@ -26,6 +28,7 @@ async def f(message: Message):
     except (ChatAdminRequiredError, MessageIdInvalidError, InlineBotRequiredError):
         # Bot is not an admin, or the message is uneditable (for example, a sticker)
         pass
+
 
 @bot.on(events.CallbackQuery())
 async def f(event: events.CallbackQuery.Event):

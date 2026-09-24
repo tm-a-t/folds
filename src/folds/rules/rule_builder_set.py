@@ -1,13 +1,13 @@
 from abc import ABC
-from typing import Any
 from collections.abc import Callable
+from typing import Any
 
+import telethon.tl.types as tl_types
 from telethon import events
 from telethon.events.common import EventCommon
 from telethon.tl.custom import Message
-import telethon.tl.types as tl_types
 
-from folds.context import bot, bot
+from folds.context import bot
 from folds.rules.rule import Rule
 from folds.rules.rule_builder_factory import RuleBuilderFactory, RuleBuilderProtocol
 
@@ -34,9 +34,7 @@ class BasicRuleBuilderSet(RuleBuilderFactory, ABC):
         self.group_commands = CommandRuleBuilderSet(self, lambda event: event.is_group)
         self.private_commands = CommandRuleBuilderSet(self, lambda event: event.is_private)
 
-        self.added_to_group: RuleBuilderProtocol = self.create_rule_builder(
-            events.ChatAction(func=_added_to_group)
-        )
+        self.added_to_group: RuleBuilderProtocol = self.create_rule_builder(events.ChatAction(func=_added_to_group))
         self.removed_from_group: RuleBuilderProtocol = self.create_rule_builder(
             events.ChatAction(func=_removed_from_group)
         )
@@ -50,9 +48,9 @@ class BasicRuleBuilderSet(RuleBuilderFactory, ABC):
 class RuleBuilderSet(BasicRuleBuilderSet, ABC):
     def __init__(self):
         super().__init__()
-        self.admin_commands: CommandRuleBuilderSet = CommandRuleBuilderSet(self,
-                                                                           lambda event: bot.app.admin.is_authorized(
-                                                                               event))
+        self.admin_commands: CommandRuleBuilderSet = CommandRuleBuilderSet(
+            self, lambda event: bot.app.admin.is_authorized(event)
+        )
         self.admin: AdminRuleBuilderSet = AdminRuleBuilderSet(self._use_rule)
 
 
@@ -91,26 +89,17 @@ def _from_true_channel(event: EventCommon) -> bool:
 
 def _added_to_group(event: events.ChatAction.Event) -> bool:
     return (
-            event.is_group
-            and event.user_added
-            and event.user.is_self
-            and hasattr(event.original_update, 'new_participant')
+        event.is_group and event.user_added and event.user.is_self and hasattr(event.original_update, 'new_participant')
     )
 
 
 def _removed_from_group(event: events.ChatAction.Event) -> bool:
-    return (
-            event.is_group
-            and event.user_kicked
-            and event.user.is_self
-    )
+    return event.is_group and event.user_kicked and event.user.is_self
 
 
 def _group_became_supergroup(event: events.ChatAction.Event) -> bool:
     return (
-            isinstance(event, tl_types.UpdateNewChannelMessage)
-            and isinstance(event.message, tl_types.MessageService)
-            and isinstance(
-        event.message.action, tl_types.MessageActionChannelMigrateFrom
-    )
+        isinstance(event, tl_types.UpdateNewChannelMessage)
+        and isinstance(event.message, tl_types.MessageService)
+        and isinstance(event.message.action, tl_types.MessageActionChannelMigrateFrom)
     )

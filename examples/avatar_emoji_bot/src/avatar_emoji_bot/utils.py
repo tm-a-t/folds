@@ -1,5 +1,6 @@
-from telethon.tl import types as tl_types
 from telethon import events
+from telethon.tl import types as tl_types
+
 from folds import Message
 
 TITLE_SUFFIX = ' Avatars'
@@ -11,6 +12,7 @@ class Emoji(tl_types.InputStickerSetItem):
     def __init__(self, document: tl_types.TypeInputDocument, emoji: str, bytes_: bytes, keywords: str | None = None):
         self.bytes = bytes_
         super().__init__(document, emoji, keywords=keywords)
+
 
 def get_set_title(chat_title: str):
     chat_title = chat_title.split(': ')[0]

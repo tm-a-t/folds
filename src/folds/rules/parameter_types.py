@@ -1,11 +1,12 @@
 import inspect
 from abc import ABC, abstractmethod
-from collections.abc import Callable, Awaitable
+from collections.abc import Awaitable, Callable
 from typing import Annotated, Any
 
 import telethon.tl.types as tl_types
 from telethon import events
-from telethon.events.common import EventBuilder as EventBuilder, EventCommon
+from telethon.events.common import EventBuilder as EventBuilder
+from telethon.events.common import EventCommon
 from telethon.tl.custom import Message
 
 from folds.exceptions import FoldsRuleArgumentException
@@ -36,17 +37,21 @@ class ParameterType[E: EventCommon](ABC):
 
 class EventParameterType(ParameterType):
     def matches(self, parameter: inspect.Parameter) -> bool:
-        return (issubclass(parameter.annotation, EventCommon)
-                or parameter.annotation is Message
-                or parameter.annotation.__name__.startswith('Update'))  # todo check for events.Raw[]
+        return (
+            issubclass(parameter.annotation, EventCommon)
+            or parameter.annotation is Message
+            or parameter.annotation.__name__.startswith('Update')
+        )  # todo check for events.Raw[]
 
     async def get_value(self, event: EventCommon) -> Any:
         return event
 
     def validate(self, parameter: inspect.Parameter, event: EventBuilder):
-        if (isinstance(event, events.NewMessage | events.ChatAction)
-                and parameter.annotation is not event.Event
-                and parameter.annotation is not Message):
+        if (
+            isinstance(event, events.NewMessage | events.ChatAction)
+            and parameter.annotation is not event.Event
+            and parameter.annotation is not Message
+        ):
             raise FoldsRuleArgumentException(f'Invalid argument type for {event}. Try using `folds.Message`.')
 
 

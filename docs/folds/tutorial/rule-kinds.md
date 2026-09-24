@@ -79,6 +79,7 @@ async def f():
 ```python
 from folds import Query
 
+
 @bot.inline_query
 async def f(query: Query):
     await query.answer([
@@ -107,7 +108,7 @@ Folds supports Telethon events:
 ```python
 from telethon import events
 
+
 @bot.on(events.CallbackQuery())
-async def f():
-    ...
+async def f(): ...
 ```

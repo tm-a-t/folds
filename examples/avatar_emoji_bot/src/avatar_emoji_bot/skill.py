@@ -1,10 +1,10 @@
 import asyncio
 
-from folds import Skill, Message, SystemMessage
 from telethon import Button
 
 from avatar_emoji_bot.functions import update_or_create_set
 from avatar_emoji_bot.utils import get_chat_set_link
+from folds import Message, Skill, SystemMessage
 
 skill = Skill()
 lock = asyncio.Lock()

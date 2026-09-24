@@ -1,12 +1,13 @@
 import inspect
-from collections.abc import Callable, Awaitable
+from collections.abc import Awaitable, Callable
 from dataclasses import dataclass
 from typing import Any
 
-from telethon.events.common import EventBuilder as EventBuilder, EventCommon
+from telethon.events.common import EventBuilder as EventBuilder
+from telethon.events.common import EventCommon
 
 from folds.exceptions import FoldsRuleArgumentException
-from folds.rules.parameter_types import parameter_types, RuleCallback
+from folds.rules.parameter_types import RuleCallback, parameter_types
 from folds.utils import await_if_needed
 
 PreparedRuleCallback = Callable[[EventCommon], Awaitable[Any]]

@@ -39,7 +39,7 @@ class GroupStore:
         async with self._lock:
             cursor = await asyncio.to_thread(
                 self.connection.execute,
-                "SELECT 1 FROM known_groups WHERE chat_id = ?",
+                'SELECT 1 FROM known_groups WHERE chat_id = ?',
                 (chat_id,),
             )
             existing_row = await asyncio.to_thread(cursor.fetchone)
@@ -61,7 +61,7 @@ class GroupStore:
     async def list_chat_ids(self) -> list[int]:
         async with self._lock:
             cursor = await asyncio.to_thread(
-                self.connection.execute, "SELECT chat_id FROM known_groups ORDER BY first_seen_at"
+                self.connection.execute, 'SELECT chat_id FROM known_groups ORDER BY first_seen_at'
             )
             rows = await asyncio.to_thread(cursor.fetchall)
             return [row[0] for row in rows]

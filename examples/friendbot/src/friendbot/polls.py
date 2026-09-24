@@ -6,7 +6,7 @@ from telethon.tl import types
 from telethon.tl.types import InputMediaPoll
 
 MAX_OPTIONS = 12
-ADD_TO_CHAT_BUTTON_TEXT = "Запустить вопросы в чате друзей"
+ADD_TO_CHAT_BUTTON_TEXT = 'Запустить вопросы в чате друзей'
 
 
 async def build_add_to_chat_button(client: TelegramClient) -> Button:
@@ -16,7 +16,7 @@ async def build_add_to_chat_button(client: TelegramClient) -> Button:
 
     return Button.url(
         ADD_TO_CHAT_BUTTON_TEXT,
-        f"https://t.me/{bot_info.username}?startgroup=true",
+        f'https://t.me/{bot_info.username}?startgroup=true',
     )
 
 
@@ -43,17 +43,18 @@ class PollService:
                 names.append(name)
 
         if len(names) < 2:
-            raise ValueError("Need at least 2 non-bot members to create a poll.")
+            raise ValueError('Need at least 2 non-bot members to create a poll.')
 
         if len(names) > MAX_OPTIONS:
             names = random.sample(names, k=MAX_OPTIONS)
 
         return names
 
-    async def send_poll(self, client: TelegramClient, chat_ref: int, question: str, options: list[str],
-                        button: Button | None) -> None:
+    async def send_poll(
+        self, client: TelegramClient, chat_ref: int, question: str, options: list[str], button: Button | None
+    ) -> None:
         poll_answers = [
-            types.PollAnswer(text=types.TextWithEntities(text=option, entities=[]), option=f"{index}".encode())
+            types.PollAnswer(text=types.TextWithEntities(text=option, entities=[]), option=f'{index}'.encode())
             for index, option in enumerate(options, start=1)
         ]
 
@@ -79,18 +80,18 @@ class PollService:
     @staticmethod
     def _load_questions(path: Path) -> list[str]:
         if not path.exists():
-            raise FileNotFoundError(f"Question file was not found: {path}")
+            raise FileNotFoundError(f'Question file was not found: {path}')
 
-        questions = [line.strip() for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        questions = [line.strip() for line in path.read_text(encoding='utf-8').splitlines() if line.strip()]
         if not questions:
-            raise ValueError(f"Question file is empty: {path}")
+            raise ValueError(f'Question file is empty: {path}')
         return questions
 
 
 def _pick_member_name(user: types.User) -> str:
-    full_name = " ".join(part for part in [user.first_name, user.last_name] if part).strip()
+    full_name = ' '.join(part for part in [user.first_name, user.last_name] if part).strip()
     if full_name:
         return full_name
     if user.username:
-        return f"@{user.username}"
-    return f"Member {user.id}"
+        return f'@{user.username}'
+    return f'Member {user.id}'

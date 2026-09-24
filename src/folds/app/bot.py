@@ -4,7 +4,7 @@ from typing import Any
 from folds.admin.admin import Admin, EmptyAdmin
 from folds.app.app import App, _empty_context
 from folds.app.bot_in_app import BotInApp
-from folds.app.lifespan import default_lifespan, Lifespan
+from folds.app.lifespan import Lifespan, default_lifespan
 from folds.env_settings import settings
 
 
@@ -16,21 +16,19 @@ class Bot[T](BotInApp):
     """
 
     def __init__(
-            self,
-            token: str | None = None,
-            api_id: int | None = None,
-            api_hash: str | None = None,
-            *,
-
-            # App args:
-            context: T = _empty_context,  # ty: ignore[invalid-parameter-default]
-            lifespan: Lifespan[App] = default_lifespan,
-            default_session_directory: str | Path | None = None,
-            admin: Admin = EmptyAdmin(),
-
-            # Bot args:
-            parse_mode: Any = None,
-            **telethon_client_kwargs: Any,
+        self,
+        token: str | None = None,
+        api_id: int | None = None,
+        api_hash: str | None = None,
+        *,
+        # App args:
+        context: T = _empty_context,  # ty: ignore[invalid-parameter-default]
+        lifespan: Lifespan[App] = default_lifespan,
+        default_session_directory: str | Path | None = None,
+        admin: Admin = EmptyAdmin(),
+        # Bot args:
+        parse_mode: Any = None,
+        **telethon_client_kwargs: Any,
     ):
         app = App[T](
             api_id=api_id,

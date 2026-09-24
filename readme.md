@@ -17,18 +17,18 @@ bot = Bot(bot_token, api_id, api_hash)
 
 @bot.added_to_group
 async def handle_added():
-  return 'Hello!'
+    return 'Hello!'
 
 
 @bot.group_commands.help
 async def handle_help_command():
-  return 'You called for /help?'
+    return 'You called for /help?'
 
 
 @bot.group_commands.hello
 async def handle_hello_command(message: Message, user: ThisUser):
-  await message.reply('Hmm!')
-  await message.reply(f'Hello, {user.first_name}')
+    await message.reply('Hmm!')
+    await message.reply(f'Hello, {user.first_name}')
 
 
 bot.run()

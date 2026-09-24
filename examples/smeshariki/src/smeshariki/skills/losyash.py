@@ -1,5 +1,6 @@
-from folds import Skill
 from smeshariki.strings import all_bot_strings
+
+from folds import Skill
 
 losyash_skill = Skill()
 

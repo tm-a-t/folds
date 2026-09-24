@@ -1,5 +1,5 @@
 from collections.abc import Callable
-from contextlib import asynccontextmanager, AbstractAsyncContextManager
+from contextlib import AbstractAsyncContextManager, asynccontextmanager
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
