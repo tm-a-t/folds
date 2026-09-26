@@ -1,5 +1,5 @@
-from folds.rules.rule_builder_set import RuleBuilderSet
 from folds.rules.rule import Rule
+from folds.rules.rule_builder_set import RuleBuilderSet
 
 
 class Skill(RuleBuilderSet):

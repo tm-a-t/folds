@@ -1,15 +1,14 @@
 from pathlib import Path
+from typing import TYPE_CHECKING, Any
 
 from telethon.events.common import EventCommon
 from telethon.sessions import Session
 
 from folds.app.bot_client import BotClient
-from folds.context.vars import bot
-from folds.rules.rule_builder_set import RuleBuilderSet
 from folds.app.skill import Skill
-from folds.rules.rule import Rule, PreparedRuleCallback
-
-from typing import TYPE_CHECKING, Any
+from folds.context.vars import bot
+from folds.rules.rule import PreparedRuleCallback, Rule
+from folds.rules.rule_builder_set import RuleBuilderSet
 
 if TYPE_CHECKING:
     from folds.app.app import App
@@ -21,13 +20,13 @@ class BotInApp(BotClient, RuleBuilderSet):
     """
 
     def __init__(
-            self,
-            token: str,
-            *,
-            app: 'App',
-            session: str | Path | Session | None = None,
-            parse_mode: Any = None,
-            **kwargs: Any,
+        self,
+        token: str,
+        *,
+        app: 'App',
+        session: str | Path | Session | None = None,
+        parse_mode: Any = None,
+        **kwargs: Any,
     ):
         RuleBuilderSet.__init__(self)
 

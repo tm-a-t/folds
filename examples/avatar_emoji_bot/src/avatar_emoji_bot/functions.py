@@ -4,13 +4,13 @@ from random import randint
 
 from PIL import Image
 from telethon.errors import BadRequestError, StickersetInvalidError
-from telethon.functions import stickers, messages
+from telethon.functions import messages, stickers
 from telethon.tl import types as tl_types
 from telethon.tl.functions.messages import UploadMediaRequest
-from telethon.types import Chat, Channel
+from telethon.types import Channel, Chat
 from telethon.utils import get_input_document
 
-from avatar_emoji_bot.utils import get_set_title, get_set_link, Emoji
+from avatar_emoji_bot.utils import Emoji, get_set_link, get_set_title
 from folds.context import bot
 
 mask_image = Image.open('mask.png').convert('L')
@@ -32,7 +32,7 @@ async def update_or_create_set(chat: Chat | Channel, user_id: int) -> bool:
 
 async def _get_set(chat: Chat | Channel) -> tl_types.messages.StickerSet:
     link = get_set_link(chat.id, bot.me.username)
-    get_set_request = messages.GetStickerSetRequest(tl_types.InputStickerSetShortName(link), hash=randint(1, 10 ** 9))
+    get_set_request = messages.GetStickerSetRequest(tl_types.InputStickerSetShortName(link), hash=randint(1, 10**9))
     return await bot(get_set_request)
 
 

@@ -15,8 +15,8 @@ When you declare the rules with typed parameters, Folds provides the arguments a
 ```python
 @bot.group_message
 async def f(chat: ThisChat):
-    # Now, Telethon has resolved the chat even if 
-    # the chat info didn't come with the update 
+    # Now, Telethon has resolved the chat even if
+    # the chat info didn't come with the update
     return f'I got a message from {chat.title}'
 ```
 

@@ -2,14 +2,14 @@ import asyncio
 import logging
 from contextlib import suppress
 from pathlib import Path
-from typing import Self, Any
+from typing import Any, Self
 
 from telethon.helpers import get_running_loop
 from telethon.sessions import Session
 
 from folds.admin.admin import Admin, EmptyAdmin
 from folds.app.bot_in_app import BotInApp
-from folds.app.lifespan import default_lifespan, Lifespan
+from folds.app.lifespan import Lifespan, default_lifespan
 from folds.env_settings import settings
 
 logger = logging.getLogger(__name__)
@@ -17,17 +17,18 @@ logger = logging.getLogger(__name__)
 
 _empty_context = object()
 
+
 class App[T]:
     def __init__(
-            self,
-            api_id: int | None = None,
-            api_hash: str | None = None,
-            *,
-            context: T = _empty_context,  # ty: ignore[invalid-parameter-default]
-            lifespan: Lifespan[Self] = default_lifespan,
-            default_session_directory: str | Path | None = None,
-            admin: Admin = EmptyAdmin(),
-            **common_bot_kwargs: Any,
+        self,
+        api_id: int | None = None,
+        api_hash: str | None = None,
+        *,
+        context: T = _empty_context,  # ty: ignore[invalid-parameter-default]
+        lifespan: Lifespan[Self] = default_lifespan,
+        default_session_directory: str | Path | None = None,
+        admin: Admin = EmptyAdmin(),
+        **common_bot_kwargs: Any,
     ):
         self.api_id = api_id or settings.api_id
         self.api_hash = api_hash or settings.api_hash
