@@ -11,7 +11,7 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
-    "telethon~=1.44",
+    "telethon~=1.45",
 ]
 
 [project.optional-dependencies]
