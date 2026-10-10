@@ -13,9 +13,9 @@
 
 Folds is an elegant and scalable framework for bots, wrapping Telethon library.
 
-- Minimalistic when you need simple features, powerful when you need complex ones.
-- Flexible app structure with no boilerplate and no imports in the middle of files.
-- Easy support for multi-bot apps.
+- Easy to read for humans and agents.
+- Designed to avoid boilerplate and ugly code.
+- Supports all niche Telegram features.
 - Built with Telegram API without Bot API — I explain it below.
 
 ```python 
@@ -74,7 +74,6 @@ I will appreciate if you show your interest by leaving a star on the repo.
 Here is how to get familiar with Folds:
 - Read these docs, of course. I tried to make them friendly!
 - Read [the Telethon docs](https://docs.telethon.dev) because Folds bases on Telethon. 
-  ChatGPT knows Telethon well, apparently.
 - For specific features, read [the Papercraft Book,](/book/) my book on developing Telegram bots. 
   It includes code examples for Folds.
 
