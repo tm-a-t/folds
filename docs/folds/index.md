@@ -19,7 +19,7 @@ Folds is an elegant and scalable framework for bots, wrapping Telethon library.
 - Built with Telegram API without Bot API — I explain it below.
 
 ```python 
-from folds import Bot, Message, ThisUser
+from folds import Bot, Message, ThisSender
 
 bot = Bot(bot_token, api_id, api_hash)
 
@@ -35,7 +35,7 @@ async def handle_help_command():
 
 
 @bot.group_commands.hello
-async def handle_hello_command(message: Message, user: ThisUser):
+async def handle_hello_command(message: Message, user: ThisSender):
     await message.reply('Hmm!')
     await message.reply(f'Hello, {user.first_name}')
 
